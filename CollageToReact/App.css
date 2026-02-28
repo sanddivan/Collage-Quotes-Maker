@@ -1,0 +1,63 @@
+.app-container {
+  display: flex;
+  height: 100vh;
+  font-family: sans-serif;
+}
+
+.sidebar {
+  width: 250px;
+  padding: 20px;
+  background: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.canvas {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e0e0e0;
+}
+
+/* The Grid */
+.collage-grid {
+  display: grid;
+  width: 80%;
+  max-width: 800px;
+  min-height: 400px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  transition: all 0.3s ease; /* Smoothly animate gap/color changes */
+}
+
+/* Individual Slots */
+.image-slot {
+  background: #ccc;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease; /* Hover animation base */
+}
+
+.image-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Hover Animation */
+.image-slot:hover {
+  transform: scale(1.02);
+  z-index: 10;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Click Animation */
+.image-slot:active {
+  transform: scale(0.98);
+}

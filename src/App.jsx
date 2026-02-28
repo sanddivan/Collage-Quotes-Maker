@@ -89,6 +89,7 @@ export default function App() {
                 ref={imgInputRef}
                 type="file"
                 accept="image/*"
+                hidden
             />
         </div>
     )
