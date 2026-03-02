@@ -1,5 +1,20 @@
 // File: Sidebar.jsx
 
+/**
+ * @typedef {import('../utils/types.mjs').Dimensions} Dimensions
+ * @typedef {import('../utils/types.mjs').LayoutDesc} LayoutDesc
+ */
+
+/**
+ * @param {Dimensions} dimensions
+ * @param {ChangeEventHandler<HTMLInputElement, HTMLInputElement>} onWidthChange
+ * @param {ChangeEventHandler<HTMLInputElement, HTMLInputElement>} onHeightChange
+ * @param {Record<string, LayoutDesc>} allLayouts
+ * @param {string} selectedLayoutKey
+ * @param {function(string): void} onLayoutChange
+ * @returns {React.JSX.Element}
+ */
+
 export default function Sidebar({
     dimensions,
     onWidthChange,

@@ -1,10 +1,13 @@
 // File: useCollageState.mjs
 
+/** @typedef {import('../utils/types.mjs').CollageState} CollageState */
+
 import { useState } from 'react';
 import { DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT, LAYOUTS } from '../constants.mjs';
 
 /**
- * Collage State Setup!
+ * Configures and keeps the general state of the whole collage page.
+ * @returns {CollageState}
  */
 
 export default function useCollageState() {
@@ -16,14 +19,14 @@ export default function useCollageState() {
     const setWidth = (newWidth) => {
         setDimensions((prevState) => ({
             ...prevState,
-            width: parseInt(newWidth)
+            width: newWidth ? parseInt(newWidth) : 0
         }));
     };
 
     const setHeight = (newHeight) => {
         setDimensions((prevState) => ({
             ...prevState,
-            height: parseInt(newHeight)
+            height: newHeight ? parseInt(newHeight) : 0
         }));
     };
 
