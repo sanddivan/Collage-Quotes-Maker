@@ -1,4 +1,4 @@
-// File: Canvas.jsx
+// File: CollageCanvas.jsx
 
 /** @typedef {import('../utils/types.mjs').LayoutDesc} LayoutDesc */
 
@@ -9,7 +9,7 @@
  * @returns {React.JSX.Element}
  */
 
-export default function Canvas({ width, height, layout }) {
+export default function CollageCanvas({ width, height, layout }) {
     return (
         <div className="workspace">
             <div

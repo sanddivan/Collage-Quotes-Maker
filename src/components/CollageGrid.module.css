@@ -1,0 +1,63 @@
+/* File: CollageGrid.module.css */
+
+.the-grid {
+    display: grid;
+    width: 100%;
+    height: 100%;
+
+    grid-template-rows: repeat(var('--grid-rows', 1), 1fr);
+    grid-template-columns: repeat(var('--grid-columns', 1), 1fr);
+
+    /*background: #2c2c2c;*/
+    /*padding: 12px;*/
+    /*border-radius: 8px;*/
+    /*box-shadow: 0 10px 30px rgba(0,0,0,0.3);*/
+}
+
+.slot {
+    background: #f9f9f9;
+    border: 1px dashed #aaa;
+    /*border-radius: 4px;*/
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                border-color 0.2s ease;
+}
+
+/*.slot.has-image {*/
+/*    border: none;*/
+/*}*/
+
+.slot:hover {
+    transform: scale(1.03);
+    border-color: #007bff;
+    z-index: 2;
+}
+
+.slot:active {
+    transform: scale(0.97);
+}
+
+.slot img {
+    width: 100%;
+    height: 100%;
+    /*display: block;*/
+    object-fit: cover;
+}
+
+/*.placeholder {*/
+/*    color: #888;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    height: 100%;*/
+/*    font-size: 0.9rem;*/
+/*}*/
+
+/*.plus {*/
+/*    font-size: 2rem;*/
+/*    margin-bottom: 4px;*/
+/*}*/

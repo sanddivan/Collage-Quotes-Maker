@@ -1,7 +1,7 @@
 // File: App.jsx
 
 import { useRef } from 'react';
-import Canvas from "./components/Canvas.jsx";
+import CollageCanvas from "./components/CollageCanvas.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import useCollageState from './hooks/useCollageState.mjs'
 
@@ -24,7 +24,7 @@ export default function App() {
                 onLayoutChange={collage.setLayout}
             />
 
-            <Canvas
+            <CollageCanvas
                 width={collage.dimensions.width}
                 height={collage.dimensions.height}
                 layout={collage.currentLayout}
