@@ -2,8 +2,7 @@
 
 /** @typedef {import('../utils/types.mjs').LayoutDesc} LayoutDesc */
 
-import { useRef, useState } from 'react';
-import './CollageCanvas.module.css'
+import { useGridState } from '../hooks/useGridState.mjs'
 
 /**
  * @param {number} width
@@ -13,47 +12,8 @@ import './CollageCanvas.module.css'
  */
 
 export default function CollageCanvas({ width, height, layout }) {
-    const imgInputRef = useRef(null);
     const numSlots = layout.rows * layout.columns;
-
-    const [slots, setSlots] = useState(new Array(numSlots).fill(null));
-    const [selectedSlotIndex, setSelectedSlotIndex] = useState(null);
-
-    const handleSlotClick = (index) => {
-        setSelectedSlotIndex(index);
-
-        if (imgInputRef.current) {
-            imgInputRef.current.click();
-        }
-    };
-
-    const handleImageUpload = (evt) => {
-        const file = evt.target.files[0];
-        if (!file || selectedSlotIndex === null) return ;
-
-        const newImgObj = URL.createObjectURL(file);
-
-        setSlots((prevSlots) => {
-            const updatedSlots = [...prevSlots];
-
-            // Clean up the old Blob first if we are replacing with another
-            // image, so we don't waste resources.
-
-            const oldImgObj = updatedSlots[selectedSlotIndex]
-            if (oldImgObj) {
-                URL.revokeObjectURL(oldImgObj);
-            }
-
-            updatedSlots[selectedSlotIndex] = newImgObj;
-            return updatedSlots;
-        });
-
-        // UX Reset. This is necessary to allow the user to pick and upload
-        // the same file more than once.
-
-        evt.target.value = '';
-        setSelectedSlotIndex(null);
-    };
+    const grid = useGridState(numSlots);
 
     const gridDynamicCss = {
         '--grid-rows': layout.rows,

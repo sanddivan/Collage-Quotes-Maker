@@ -11,7 +11,6 @@ import useCollageState from './hooks/useCollageState.mjs'
 
 export default function App() {
     const collage = useCollageState();
-    const imgInputRef = useRef(null);
 
     return (
         <div className="app">
@@ -28,13 +27,6 @@ export default function App() {
                 width={collage.dimensions.width}
                 height={collage.dimensions.height}
                 layout={collage.currentLayout}
-            />
-
-            <input
-                ref={imgInputRef}
-                type="file"
-                accept="image/*"
-                hidden
             />
         </div>
     );
