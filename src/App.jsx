@@ -1,6 +1,5 @@
 // File: App.jsx
 
-import { useRef } from 'react';
 import CollageCanvas from "./components/CollageCanvas.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import useCollageState from './hooks/useCollageState.mjs'
@@ -12,15 +11,23 @@ import useCollageState from './hooks/useCollageState.mjs'
 export default function App() {
     const collage = useCollageState();
 
+    const handleWidthChange = (evt) => {
+        collage.updateDimensionFunc('width', evt.target.value);
+    };
+
+    const handleHeightChange = (evt) => {
+        collage.updateDimensionFunc('height', evt.target.value);
+    };
+
     return (
         <div className="app">
             <Sidebar
                 dimensions={collage.dimensions}
-                onWidthChange={(evt) => collage.setWidth(evt.target.value)}
-                onHeightChange={(evt) => collage.setHeight(evt.target.value)}
+                onWidthChange={handleWidthChange}
+                onHeightChange={handleHeightChange}
                 allLayouts={collage.allLayouts}
                 selectedLayoutKey={collage.layoutKey}
-                onLayoutChange={collage.setLayout}
+                onLayoutChange={collage.setLayoutFunc}
             />
 
             <CollageCanvas

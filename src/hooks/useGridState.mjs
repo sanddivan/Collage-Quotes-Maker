@@ -58,6 +58,41 @@ export function useGridState(numSlots) {
         setSelectedSlotIndex(null);
     }, [selectedSlotIndex]);
 
+    // When a new layout is selected, sync with the canvas to display the new
+    // slots accordingly.
+
+    useEffect(() => {
+        setSlots((prevSlots) => {
+            if (!prevSlots) {
+                return new Array(numSlots || 0).fill(null);
+            }
+
+            if (prevSlots.length === numSlots) return ;
+
+            // If the grid shrinks, then images are removed. We have to free
+            // the resources to keep our app light and responsive.
+
+            if (prevSlots.length > numSlots) {
+                const removedSlots = prevSlots.slice(numSlots);
+
+                removedSlots.forEach(url => {
+                    if (url) {
+                        URL.revokeObjectURL(url);
+                        activeImageUrls.current.delete(url);
+                    }
+                });
+
+                return prevSlots.slice(0, numSlots);
+            }
+
+            // If the grid grew, then we generate the new empty slots for the
+            // new layout.
+
+            const newSlots = new Array(numSlots - prevSlots.length).fill(null);
+            return [...prevSlots, ...newSlots]
+        });
+    }, [numSlots]);
+
     // Unmount component when the hook is destroyed to not waste memory.
 
     useEffect(() => {

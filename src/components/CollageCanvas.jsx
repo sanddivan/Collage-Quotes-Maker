@@ -3,6 +3,7 @@
 /** @typedef {import('../utils/types.mjs').LayoutDesc} LayoutDesc */
 
 import { useGridState } from '../hooks/useGridState.mjs'
+import styles from './CollageCanvas.module.css';
 
 /**
  * @param {number} width
@@ -15,31 +16,32 @@ export default function CollageCanvas({ width, height, layout }) {
     const numSlots = layout.rows * layout.columns;
     const grid = useGridState(numSlots);
 
+    /** @type {React.CSSProperties} */
     const gridDynamicCss = {
-        '--grid-rows': layout.rows,
-        '--grid-columns': layout.columns
+        '--grid-rows': Number(layout.rows),
+        '--grid-columns': Number(layout.columns)
     }
 
     return (
-        <div className="workspace">
+        <div className={styles.workspace}>
             <div
-                className="the-canvas"
+                className={styles.theCanvas}
                 style={{
                     width: `${width}px`,
                     height: `${height}px`
                 }}
             >
-                <div className="the-grid" style={gridDynamicCss}>
-                    {slots.map((src, index) => (
+                <div className={styles.theGrid} style={gridDynamicCss}>
+                    {grid.slots.map((src, index) => (
                         <div
                             key={`slot-${index}`}
-                            className="slot"
-                            onClick={() => handleSlotClick(index)}
+                            className={styles.slot}
+                            onClick={() => grid.handleSlotClick(index)}
                         >
                             {src ? (
                                 <img src={src} alt={`Image Slot ${index}`} />
                             ) : (
-                                <div className="placeholder">
+                                <div className={styles.placeholder}>
                                     <p>Click to Add Image</p>
                                 </div>
                             )}
@@ -50,8 +52,8 @@ export default function CollageCanvas({ width, height, layout }) {
 
             <input
                 type="file"
-                ref={imgInputRef}
-                onChange={handleImageUpload}
+                ref={grid.imgInputRef}
+                onChange={grid.handleImageUpload}
                 accept="image/*"
                 hidden
             />

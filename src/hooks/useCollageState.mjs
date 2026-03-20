@@ -2,7 +2,7 @@
 
 /** @typedef {import('../utils/types.mjs').CollageState} CollageState */
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT, LAYOUTS } from '../constants.mjs';
 
 /**
@@ -16,19 +16,19 @@ export default function useCollageState() {
         height: DEFAULT_CANVAS_HEIGHT
     });
 
-    const setWidth = (newWidth) => {
-        setDimensions((prevState) => ({
-            ...prevState,
-            width: newWidth ? parseInt(newWidth) : 0
-        }));
-    };
+    const updateDimension = useCallback((dim, newValue) => {
+        if (dim !== 'width' && dim !== 'height') {
+            console.error(`Invalid dimension "${dim}". Has to be 'height' or 'width'.`);
+            return ;
+        }
 
-    const setHeight = (newHeight) => {
-        setDimensions((prevState) => ({
-            ...prevState,
-            height: newHeight ? parseInt(newHeight) : 0
+        const parsedValue = newValue ? parseInt(newValue, 10) : 0;
+
+        setDimensions(prevDimsState => ({
+            ...prevDimsState,
+            [dim]: parsedValue
         }));
-    };
+    }, []);
 
     const [layoutKey, setLayoutKey] = useState("0x0");
     const currentLayout = LAYOUTS[layoutKey];
@@ -38,11 +38,10 @@ export default function useCollageState() {
 
     return {
         dimensions,
-        setWidth,
-        setHeight,
         layoutKey,
         currentLayout,
-        setLayout: setLayoutKey,
-        allLayouts: LAYOUTS
+        allLayouts: LAYOUTS,
+        setLayoutFunc: setLayoutKey,
+        updateDimensionFunc: updateDimension
     }
 }

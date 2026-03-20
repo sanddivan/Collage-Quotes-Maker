@@ -5,6 +5,8 @@
  * @typedef {import('../utils/types.mjs').LayoutDesc} LayoutDesc
  */
 
+import styles from './Sidebar.module.css';
+
 /**
  * @param {Dimensions} dimensions
  * @param {ChangeEventHandler<HTMLInputElement, HTMLInputElement>} onWidthChange
@@ -24,24 +26,24 @@ export default function Sidebar({
     onLayoutChange
 }) {
     return (
-        <div className="sidebar">
+        <div className={styles.sidebar}>
             <h2>Settings</h2>
 
-            <div className="field">
+            <div className={styles.field}>
                 <label>Canvas Width: </label>
                 <input
                     type="number"
                     value={dimensions.width}
-                    onChange={onWidthChange}
+                    onChange={(evt) => onWidthChange(evt)}
                 />
             </div>
 
-            <div className="field">
+            <div className={styles.field}>
                 <label>Canvas Height: </label>
                 <input
                     type="number"
                     value={dimensions.height}
-                    onChange={onHeightChange}
+                    onChange={(evt) => onHeightChange(evt)}
                 />
             </div>
 

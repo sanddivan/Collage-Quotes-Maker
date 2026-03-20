@@ -1,5 +1,15 @@
 // File: types.mjs
 
+/** @typedef {import('react').Dispatch} Dispatch */
+/** @typedef {import('react').SetStateAction} SetStateAction */
+
+/**
+ * @callback DimensionUpdater
+ * @param {'width' | 'height'} dim
+ * @param {number | string} newValue
+ * @returns {void}
+ */
+
 /**
  * @typedef {Object} Dimensions
  *
@@ -19,12 +29,11 @@
  * @typedef {Object} CollageState
  *
  * @property {Dimensions} dimensions
- * @property {function(number|string): void} setWidth
- * @property {function(number|string): void} setHeight
  * @property {string} layoutKey
  * @property {LayoutDesc} currentLayout
- * @property {function(string): void} setLayout
  * @property {Record<string, LayoutDesc>} allLayouts
+ * @property {Dispatch<SetStateAction<string>>} setLayoutFunc
+ * @property {DimensionUpdater} updateDimensionFunc
  */
 
 export {};
