@@ -1,7 +1,5 @@
 // File: useGridState.mjs
 
-/** @typedef {import('./useGridState.types.mjs').GridState} GridState */
-
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 /**

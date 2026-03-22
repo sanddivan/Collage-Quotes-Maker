@@ -1,8 +1,5 @@
 // File: types.mjs
 
-/** @typedef {import('react').Dispatch} Dispatch */
-/** @typedef {import('react').SetStateAction} SetStateAction */
-
 /**
  * @callback DimensionUpdater
  * @param {'width' | 'height'} dim

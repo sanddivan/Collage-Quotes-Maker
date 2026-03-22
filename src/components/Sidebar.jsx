@@ -1,10 +1,5 @@
 // File: Sidebar.jsx
 
-/**
- * @typedef {import('../utils/types.mjs').Dimensions} Dimensions
- * @typedef {import('../utils/types.mjs').LayoutDesc} LayoutDesc
- */
-
 import styles from './Sidebar.module.css';
 
 /**

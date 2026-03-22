@@ -1,9 +1,10 @@
 // File: CollageCanvas.jsx
 
-/** @typedef {import('../utils/types.mjs').LayoutDesc} LayoutDesc */
+import { useRef } from 'react';
 
 import { useGridState } from '../hooks/useGridState.mjs'
 import styles from './CollageCanvas.module.css';
+import DownloadButton from "./DownloadButton.jsx";
 
 /**
  * @param {number} width
@@ -15,6 +16,7 @@ import styles from './CollageCanvas.module.css';
 export default function CollageCanvas({ width, height, layout }) {
     const numSlots = layout.rows * layout.columns;
     const grid = useGridState(numSlots);
+    const canvasRef = useRef(null);
 
     /** @type {React.CSSProperties} */
     const gridDynamicCss = {
@@ -25,6 +27,7 @@ export default function CollageCanvas({ width, height, layout }) {
     return (
         <div className={styles.workspace}>
             <div
+                ref={canvasRef}
                 className={styles.theCanvas}
                 style={{
                     width: `${width}px`,
@@ -49,6 +52,8 @@ export default function CollageCanvas({ width, height, layout }) {
                     ))}
                 </div>
             </div>
+
+            <DownloadButton canvasRef={canvasRef} />
 
             <input
                 type="file"

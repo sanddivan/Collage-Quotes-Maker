@@ -1,8 +1,5 @@
 // File: useGridState.types.mjs
 
-/** @typedef {import('react').ChangeEvent} ChangeEvent */
-/** @typedef {import('react').RefObject} RefObject */
-
 /**
  * @callback SlotClickHandler
  * @param {number} index

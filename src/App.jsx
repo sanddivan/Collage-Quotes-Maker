@@ -1,8 +1,8 @@
 // File: App.jsx
 
-import CollageCanvas from "./components/CollageCanvas.jsx";
-import Sidebar from "./components/Sidebar.jsx";
-import useCollageState from './hooks/useCollageState.mjs'
+import CollageCanvas from './components/CollageCanvas.jsx';
+import Sidebar from './components/Sidebar.jsx';
+import { useCollageState } from './hooks/useCollageState.mjs'
 
 /**
  * Setup function!

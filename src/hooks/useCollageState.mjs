@@ -1,7 +1,5 @@
 // File: useCollageState.mjs
 
-/** @typedef {import('../utils/types.mjs').CollageState} CollageState */
-
 import { useCallback, useState } from 'react';
 import { DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT, LAYOUTS } from '../constants.mjs';
 
@@ -10,7 +8,7 @@ import { DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT, LAYOUTS } from '../constan
  * @returns {CollageState}
  */
 
-export default function useCollageState() {
+export function useCollageState() {
     const [dimensions, setDimensions] = useState({
         width: DEFAULT_CANVAS_WIDTH,
         height: DEFAULT_CANVAS_HEIGHT
