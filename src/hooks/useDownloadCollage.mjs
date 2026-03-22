@@ -13,7 +13,7 @@ export async function downloadCollage(canvasRef) {
     console.log('Download Collage Had Content!');
     const fullCollageObj = await html2canvas(
         canvasRef.current,
-        { useCORS: true, logging: false }
+        { useCORS: true, logging: false, scale: window.devicePixelRatio || 2 }
     );
 
     const imageToDownload = fullCollageObj.toDataURL('image/png');

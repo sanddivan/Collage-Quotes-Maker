@@ -1,7 +1,5 @@
 // File: constants.mjs
 
-/** @typedef {import('./utils/types.mjs').LayoutDesc} LayoutDesc */
-
 export const DEFAULT_CANVAS_WIDTH = 1280;
 export const DEFAULT_CANVAS_HEIGHT = 720;
 

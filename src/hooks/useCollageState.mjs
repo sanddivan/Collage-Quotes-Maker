@@ -1,7 +1,7 @@
 // File: useCollageState.mjs
 
 import { useCallback, useState } from 'react';
-import { DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT, LAYOUTS } from '../constants.mjs';
+import { DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT, LAYOUTS } from '../utils/constants.mjs';
 
 /**
  * Configures and keeps the general state of the whole collage page.
