@@ -1,146 +1,154 @@
-.slot img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+export default function CollageCanvas({ width, height, layout }) {
+    const numSlots = layout.rows * layout.columns;
+    const grid = useGridState(numSlots);
+    const canvasRef = useRef(null);
 
-    // max-width: none;
-    // max-height: none;
-
-    transform: translate(-50%, -50%);
-}
-
-const slotRatio = slotWidth / slotHeight;
-const imgRatio = imgWidth / imgHeight;
-
-if (imgRatio > slotRatio) {
-    // image is wider → fit height
-} else {
-    // image is taller → fit width
-}
-
-<img
-    src={src}
-    style={
-        imgRatio > slotRatio
-            ? { height: '100%', width: 'auto' }
-            : { width: '100%', height: 'auto' }
-    }
-/>
-
-// Custom Layouts
-
-const layout = {
-    gridTemplateColumns: '2fr 1fr',
-    gridTemplateRows: 'repeat(4, 1fr)',
-    areas: [
-        'a b',
-        'a c',
-        'a d',
-        'a e',
-    ],
-};
-
-// <div
-//     className="canvas"
-//     style={{
-//         display: 'grid',
-//         gridTemplateColumns: layout.gridTemplateColumns,
-//         gridTemplateRows: layout.gridTemplateRows,
-//         gridTemplateAreas: layout.areas.join(' '),
-//     }}
-// >
-const areaNames = ['a', 'b', 'c', 'd', 'e'];
-
-{slots.map((img, i) => (
-    <div
-        key={i}
-        className="slot"
-        style={{ gridArea: areaNames[i] }}
-    >
-        {img ? <img src={img} /> : <Placeholder />}
-    </div>
-))}
-
-// Other approach
-
-const layout = [
-    { col: 1, row: 1, colSpan: 1, rowSpan: 4 }, // big left
-    { col: 2, row: 1 },
-    { col: 2, row: 2 },
-    { col: 2, row: 3 },
-    { col: 2, row: 4 },
-];
-
-// <div
-//     className="slot"
-//     style={{
-//         gridColumn: `${col} / span ${colSpan || 1}`,
-//         gridRow: `${row} / span ${rowSpan || 1}`,
-//     }}
-// >
-
-// Layout API
-
-// layouts.js
-
-export const layouts = {
-    '2x2': {
-        columns: '1fr 1fr',
-        rows: '1fr 1fr',
-        slots: [
-            { id: 0, col: 1, row: 1 },
-            { id: 1, col: 2, row: 1 },
-            { id: 2, col: 1, row: 2 },
-            { id: 3, col: 2, row: 2 },
-        ],
-    },
-
-    'featured-left-5': {
-        columns: '2fr 1fr',
-        rows: 'repeat(4, 1fr)',
-        slots: [
-            { id: 0, col: 1, row: 1, rowSpan: 4 }, // big image
-            { id: 1, col: 2, row: 1 },
-            { id: 2, col: 2, row: 2 },
-            { id: 3, col: 2, row: 3 },
-            { id: 4, col: 2, row: 4 },
-        ],
-    },
-};
-
-function Canvas({ layoutKey, slots }) {
-    const layout = layouts[layoutKey];
+    /** @type {React.CSSProperties} */
+    const gridDynamicCss = {
+        '--grid-rows': Number(layout.rows),
+        '--grid-columns': Number(layout.columns)
+    };
 
     return (
-        <div
-            className="canvas"
-            style={{
-                display: 'grid',
-                gridTemplateColumns: layout.columns,
-                gridTemplateRows: layout.rows,
-            }}
-        >
-            {layout.slots.map((slotDef) => {
-                const img = slots[slotDef.id];
+        <div className={styles.workspace}>
+            <div
+                ref={canvasRef}
+                className={styles.theCanvas}
+                style={{
+                    width: `${width}px`,
+                    height: `${height}px`
+                }}
+            >
+                <div className={styles.theGrid} style={gridDynamicCss}>
+                    {/* Notice we are calling the item slotData now, not src */}
+                    {grid.slots.map((slotData, index) => (
+                        <div
+                            key={`slot-${index}`}
+                            ref={(el) => (grid.slotRefs.current[index] = el)} // NEW: Attach the ref here
+                            className={styles.slot}
+                            onClick={() => grid.handleSlotClick(index)}
+                        >
+                            {/* NEW: Check for slotData.url instead of just slotData */}
+                            {slotData?.url ? (
+                                <img src={slotData.url} alt={`Image Slot ${index}`} />
+                            ) : (
+                                <div className={styles.placeholder}>
+                                    <p>Click to Add Image</p>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </div>
 
-                return (
-                    <div
-                        key={slotDef.id}
-                        className="slot"
-                        style={{
-                            gridColumn: `${slotDef.col} / span ${slotDef.colSpan || 1}`,
-                            gridRow: `${slotDef.row} / span ${slotDef.rowSpan || 1}`,
-                        }}
-                    >
-                        {img ? <img src={img} /> : <Placeholder />}
-                    </div>
-                );
-            })}
+            <DownloadButton canvasRef={canvasRef} />
+
+            <input
+                type="file"
+                ref={grid.imgInputRef}
+                onChange={grid.handleImageUpload}
+                accept="image/*"
+                hidden
+            />
         </div>
     );
 }
 
-const layout = layouts[layoutKey];
-const numSlots = layout.slots.length;
+import { useState, useRef, useCallback, useEffect } from 'react';
 
-const { slots, ...handlers } = useGridState(numSlots);
+export function useGridState(numSlots) {
+    const imgInputRef = useRef(null);
+    const slotRefs = useRef([]);
+    const [slots, setSlots] = useState(new Array(numSlots).fill(null));
+    const [selectedSlotIndex, setSelectedSlotIndex] = useState(null);
+    const activeImageUrls = useRef(new Set());
+
+    // --- STRATEGY 2: THE RESIZE OBSERVER ---
+    useEffect(() => {
+        const observers = [];
+
+        slotRefs.current.forEach((slotNode, index) => {
+            if (!slotNode) return;
+
+            const observer = new ResizeObserver((entries) => {
+                const { width, height } = entries[0].contentRect;
+
+                setSlots((prev) => {
+                    // Only update if the slot exists and the dimensions actually changed
+                    if (!prev[index]) return prev;
+                    if (prev[index].slotWidth === width && prev[index].slotHeight === height) {
+                        return prev;
+                    }
+
+                    const next = [...prev];
+                    next[index] = {
+                        ...next[index],
+                        slotWidth: width,
+                        slotHeight: height,
+                        // Recalculate aspect ratio magic live
+                        slotAspectRatio: width / height
+                    };
+                    return next;
+                });
+            });
+
+            observer.observe(slotNode);
+            observers.push(observer);
+        });
+
+        return () => observers.forEach((o) => o.disconnect());
+    }, [slots.length]); // Re-attach if the number of slots changes
+
+    const handleSlotClick = useCallback((index) => {
+        setSelectedSlotIndex(index);
+        if (imgInputRef.current) imgInputRef.current.click();
+    }, []);
+
+    const handleImageUpload = useCallback(async (evt) => {
+        const file = evt.target.files[0];
+        if (!file || selectedSlotIndex === null) return;
+
+        const newImgObj = URL.createObjectURL(file);
+        activeImageUrls.current.add(newImgObj);
+
+        // Get initial slot dimensions for the first state set
+        const activeSlotNode = slotRefs.current[selectedSlotIndex];
+        const rect = activeSlotNode?.getBoundingClientRect() || { width: 0, height: 0 };
+
+        const { imgWidth, imgHeight } = await new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => resolve({ imgWidth: img.naturalWidth, imgHeight: img.naturalHeight });
+            img.src = newImgObj;
+        });
+
+        setSlots((prevSlots) => {
+            const updatedSlots = [...prevSlots];
+            const oldSlotData = updatedSlots[selectedSlotIndex];
+
+            if (oldSlotData?.url) {
+                URL.revokeObjectURL(oldSlotData.url);
+                activeImageUrls.current.delete(oldSlotData.url);
+            }
+
+            updatedSlots[selectedSlotIndex] = {
+                url: newImgObj,
+                imgWidth,
+                imgHeight,
+                imageAspectRatio: imgWidth / imgHeight,
+                slotWidth: rect.width,
+                slotHeight: rect.height,
+                slotAspectRatio: rect.width / rect.height
+            };
+
+            return updatedSlots;
+        });
+
+        evt.target.value = '';
+        setSelectedSlotIndex(null);
+    }, [selectedSlotIndex]);
+
+    // Layout Sync (Keep your existing useEffect for numSlots here...)
+    // ... (rest of your sync and cleanup logic)
+
+    return { imgInputRef, slotRefs, slots, handleSlotClick, handleImageUpload };
+}

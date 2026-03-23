@@ -55,6 +55,9 @@
 }
 
 .slot img {
+    --img-width: auto;
+    --img-height: auto;
+
     position: absolute;
     top: 50%;
     left: 50%;
@@ -62,8 +65,8 @@
     min-width: 100%;
     min-height: 100%;
 
-    width: auto;
-    height: auto;
+    width: var(--img-width, auto);
+    height: var(--img-height, auto);
 
     transform: translate(-50%, -50%);
 }

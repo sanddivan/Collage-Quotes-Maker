@@ -8,9 +8,8 @@ import html2canvas from 'html2canvas';
  */
 
 export async function downloadCollage(canvasRef) {
-    console.log('Download Collage!');
     if (!canvasRef.current) return;
-    console.log('Download Collage Had Content!');
+
     const fullCollageObj = await html2canvas(
         canvasRef.current,
         { useCORS: true, logging: false, scale: window.devicePixelRatio || 2 }

@@ -13,6 +13,12 @@
  */
 
 /**
+ * @typedef {Object} ImageSlot
+ *
+ * @property {string} imgUrl
+ */
+
+/**
  * @typedef {Object} GridState
  *
  * @property {RefObject<HTMLInputElement>} imgInputRef

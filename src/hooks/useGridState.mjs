@@ -9,12 +9,47 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 export function useGridState(numSlots) {
     const imgInputRef = useRef(null);
+
+    // The slots themselves.
+
+    const slotRefs = useRef([]);
+
+    // The images of each slot. These are represented by a temporary URL.
+    // More on that later.
+
     const [slots, setSlots] = useState(new Array(numSlots).fill(null));
     const [selectedSlotIndex, setSelectedSlotIndex] = useState(null);
 
     // Additional ref to track all active image URLs to prevent memory leaks
     // when unmounting.
+
     const activeImageUrls = useRef(new Set());
+
+    // The Resize Observer: Since we require to know the dimensions of our slots
+    // and uploaded images at all times to ensure they fit as best as possible,
+    // we need an observer to watch for size changes. After all, we support
+    // customizations like spacing between slots, which change their sizes.
+
+    useEffect(() => {
+        /** @type {ResizeObserver[]} */
+        const observers = [];
+
+        slotRefs.current.forEach((slotNode, index) => {
+            if (!slotNode) return ;
+
+            const slotObserver = new ResizeObserver((entries) => {
+                const { width, height } = entries[0].contentRect;
+
+                setSlots((prevSlots) => {
+                });
+            });
+
+            slotObserver.observe(slotNode);
+            observers.push(slotObserver);
+        });
+
+        return () => observers.forEach((o) => o.disconnect());
+    }, [slots.length]);
 
     const handleSlotClick = useCallback((index) => {
         setSelectedSlotIndex(index);
@@ -102,8 +137,11 @@ export function useGridState(numSlots) {
 
     return {
         imgInputRef,
-        slots,
+        slots: slots,
         handleSlotClick,
         handleImageUpload
     };
+}
+
+function wasResized(slot) {
 }
