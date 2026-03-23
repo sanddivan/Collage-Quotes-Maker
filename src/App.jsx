@@ -31,8 +31,7 @@ export default function App() {
             />
 
             <CollageCanvas
-                width={collage.dimensions.width}
-                height={collage.dimensions.height}
+                dimensions={collage.dimensions}
                 layout={collage.currentLayout}
             />
         </div>

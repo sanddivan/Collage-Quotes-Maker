@@ -7,13 +7,12 @@ import styles from './CollageCanvas.module.css';
 import DownloadButton from "./DownloadButton.jsx";
 
 /**
- * @param {number} width
- * @param {number} height
+ * @param {Dimensions} dimensions
  * @param {LayoutDesc} layout
  * @returns {React.JSX.Element}
  */
 
-export default function CollageCanvas({ width, height, layout }) {
+export default function CollageCanvas({ dimensions, layout }) {
     const numSlots = layout.rows * layout.columns;
     const grid = useGridState(numSlots);
     const canvasRef = useRef(null);
@@ -30,8 +29,8 @@ export default function CollageCanvas({ width, height, layout }) {
                 ref={canvasRef}
                 className={styles.theCanvas}
                 style={{
-                    width: `${width}px`,
-                    height: `${height}px`
+                    width: `${dimensions.width}px`,
+                    height: `${dimensions.height}px`
                 }}
             >
                 <div className={styles.theGrid} style={gridDynamicCss}>

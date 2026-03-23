@@ -1,3 +1,1 @@
-- Add Aspect Ratio to the Dimensions object and adapt accordingly throughout the app.
-- Ensure all the custom types are in the appropriate types.mjs file.
 - Update the slot objects from string to the custom ImageSlot.
