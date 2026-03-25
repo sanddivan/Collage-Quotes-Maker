@@ -13,16 +13,11 @@
  */
 
 /**
- * @typedef {Object} ImageSlot
- *
- * @property {string} imgUrl
- */
-
-/**
  * @typedef {Object} GridState
  *
  * @property {RefObject<HTMLInputElement>} imgInputRef
- * @property {Array<string | null>} slots
+ * @property {Array<ImageSlot | null>} slots
+ * @property {RefObject<HTMLDivElement[]>} slotRefs
  * @property {SlotClickHandler} handleSlotClick
  * @property {ImageUploadHandler} handleImageUpload
  */

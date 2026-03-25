@@ -24,6 +24,14 @@
  */
 
 /**
+ * @typedef {Object} ImageSlot
+ *
+ * @property {string} imgUrl
+ * @property {Dimensions} imgDimensions
+ * @property {Dimensions} slotDimensions
+ */
+
+/**
  * @typedef {Object} CollageState
  *
  * @property {Dimensions} dimensions

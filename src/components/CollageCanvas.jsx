@@ -34,14 +34,15 @@ export default function CollageCanvas({ dimensions, layout }) {
                 }}
             >
                 <div className={styles.theGrid} style={gridDynamicCss}>
-                    {grid.slots.map((src, index) => (
+                    {grid.slots.map((slotData, index) => (
                         <div
                             key={`slot-${index}`}
+                            ref={(elem) => (grid.slotRefs.current[index] = elem)}
                             className={styles.slot}
                             onClick={() => grid.handleSlotClick(index)}
                         >
-                            {src ? (
-                                <img src={src} alt={`Image Slot ${index}`} />
+                            {slotData?.imgUrl ? (
+                                <img src={slotData.imgUrl} alt={`Image Slot ${index}`} />
                             ) : (
                                 <div className={styles.placeholder}>
                                     <p>Click to Add Image</p>

@@ -38,10 +38,31 @@ export function useGridState(numSlots) {
             if (!slotNode) return ;
 
             const slotObserver = new ResizeObserver((entries) => {
-                const { width, height } = entries[0].contentRect;
-
-                setSlots((prevSlots) => {
-                });
+                // This is something I need to reason more about.
+                //
+                // const { width, height } = entries[0].contentRect;
+                //
+                // const newDims = {
+                //     width,
+                //     height,
+                //     aspectRatio: width / height
+                // }
+                //
+                // // WONDERING: Do we also need to update the images here?
+                //
+                // setSlots((prevSlots) => {
+                //     if (!wasResized(prevSlots[index], newDims))
+                //         return prevSlots;
+                //
+                //     const updatedSlots = [...prevSlots];
+                //
+                //     updatedSlots[index] = {
+                //         ...updatedSlots[index],
+                //         slotDimensions: newDims
+                //     }
+                //
+                //     return updatedSlots;
+                // });
             });
 
             slotObserver.observe(slotNode);
@@ -59,7 +80,7 @@ export function useGridState(numSlots) {
         }
     }, []);
 
-    const handleImageUpload = useCallback((evt) => {
+    const handleImageUpload = useCallback(async (evt) => {
         const file = evt.target.files[0];
         if (!file || selectedSlotIndex === null) return ;
 
@@ -67,6 +88,21 @@ export function useGridState(numSlots) {
 
         const newImgObj = URL.createObjectURL(file);
         activeImageUrls.current.add(newImgObj);
+
+        const activeSlotNode = slotRefs.current[selectedSlotIndex];
+        const slotRect = activeSlotNode ? activeSlotNode.getBoundingClientRect()
+            : { width: 0, height: 0 }
+
+        const { imgWidth, imgHeight } = await new Promise((resolve) => {
+            const img = new Image();
+
+            img.onload = () => resolve({
+                imgWidth: img.naturalWidth,
+                imgHeight: img.naturalHeight
+            });
+
+            img.src = newImgObj;
+        });
 
         setSlots((prevSlots) => {
             const updatedSlots = [...prevSlots];
@@ -76,11 +112,29 @@ export function useGridState(numSlots) {
             // image, and update the URL tracker.
 
             if (oldImgObj) {
-                URL.revokeObjectURL(oldImgObj);
-                activeImageUrls.current.delete(oldImgObj);
+                URL.revokeObjectURL(oldImgObj.url);
+                activeImageUrls.current.delete(oldImgObj.url);
             }
 
-            updatedSlots[selectedSlotIndex] = newImgObj;
+            // WONDERING: Should we change the image dimensions here if
+            //            different from the slot's?
+
+            updatedSlots[selectedSlotIndex] = {
+                imgUrl: newImgObj,
+
+                imgDimensions: {
+                    width: imgWidth,
+                    height: imgHeight,
+                    aspectRatio: imgWidth / imgHeight
+                },
+
+                slotDimensions: {
+                    width: slotRect.width,
+                    height: slotRect.height,
+                    aspectRatio: slotRect.width / slotRect.height
+                }
+            };
+
             return updatedSlots;
         });
 
@@ -137,11 +191,23 @@ export function useGridState(numSlots) {
 
     return {
         imgInputRef,
-        slots: slots,
+        slots,
+        slotRefs,
         handleSlotClick,
         handleImageUpload
     };
 }
 
-function wasResized(slot) {
+/**
+ * @param {ImageSlot} slot
+ * @param {Dimensions} newDims
+ * @returns {boolean}
+ */
+function wasResized(slot, newDims) {
+    if (!slot) return false;
+
+    const slotWidth = slot.slotDimensions.width;
+    const slotHeight = slot.slotDimensions.height;
+
+    return slotWidth !== newDims.width || slotHeight !== newDims.height;
 }

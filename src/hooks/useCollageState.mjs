@@ -15,35 +15,32 @@ export function useCollageState() {
         aspectRatio: DEFAULT_CANVAS_WIDTH / DEFAULT_CANVAS_HEIGHT
     });
 
-    const updateDimension = useCallback((dimChanged, newValue) => {
-        if (dimChanged !== 'width' && dimChanged !== 'height') {
-            console.error(`Invalid dimension "${dimChanged}". Has to be 'height' or 'width'.`);
+    const updateDimension = useCallback((dim, newValue) => {
+        if (dim !== 'width' && dim !== 'height') {
+            console.error(`Invalid dimension "${dim}". Has to be 'height' or 'width'.`);
             return ;
         }
 
-        // Since we need to always respect the image's aspect ratio, we have
-        // to calculate the other dimension when one is updated. For this,
-        // we apply the following formula:
-        //
-        // If height changed, and thus we need a new width:
-        // New Width = Height * Aspect Ratio
-        //
-        // If width changed, and thus we need a new height:
-        // New Height = Width / Aspect Ratio
-
         const parsedDimValue = newValue ? parseInt(newValue, 10) : 0;
-        const dimToUpdate = dimChanged === 'width' ? 'height' : 'width';
 
-        setDimensions(prevDimsState => ({
-            ...prevDimsState,
-            [dimChanged]: parsedDimValue,
-            [dimToUpdate]: dimToUpdate === 'width'
-                ? parsedDimValue * prevDimsState.aspectRatio // New Width
-                : parsedDimValue / prevDimsState.aspectRatio // New Height
-        }));
+        setDimensions(prevDimsState => {
+            const newWidth = dim === 'width' ? parsedDimValue : prevDimsState.width;
+            const newHeight = dim === 'height' ? parsedDimValue : prevDimsState.height;
+
+            // Protecting against division by zero with this.
+            const newAspectRatio = (newWidth === 0 || newWidth === 0)
+                ? 0
+                : newWidth / newHeight;
+
+            return {
+                width: newWidth,
+                height: newHeight,
+                aspectRatio: newAspectRatio
+            };
+        });
     }, []);
 
-    const [layoutKey, setLayoutKey] = useState("0x0");
+    const [layoutKey, setLayoutKey] = useState('0x0');
     const currentLayout = LAYOUTS[layoutKey];
 
     // JS Note to Self: "Lone" keys mean that the value is a variable with the
