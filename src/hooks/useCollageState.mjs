@@ -28,7 +28,7 @@ export function useCollageState() {
             const newHeight = dim === 'height' ? parsedDimValue : prevDimsState.height;
 
             // Protecting against division by zero with this.
-            const newAspectRatio = (newWidth === 0 || newWidth === 0)
+            const newAspectRatio = (newWidth === 0 || newHeight === 0)
                 ? 0
                 : newWidth / newHeight;
 

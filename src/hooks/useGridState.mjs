@@ -1,6 +1,7 @@
 // File: useGridState.mjs
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useImgSizeAdjustment } from './useImgSizeAdjustment.mjs';
 
 /**
  * @param numSlots
@@ -39,30 +40,28 @@ export function useGridState(numSlots) {
 
             const slotObserver = new ResizeObserver((entries) => {
                 // This is something I need to reason more about.
-                //
-                // const { width, height } = entries[0].contentRect;
-                //
-                // const newDims = {
-                //     width,
-                //     height,
-                //     aspectRatio: width / height
-                // }
-                //
-                // // WONDERING: Do we also need to update the images here?
-                //
-                // setSlots((prevSlots) => {
-                //     if (!wasResized(prevSlots[index], newDims))
-                //         return prevSlots;
-                //
-                //     const updatedSlots = [...prevSlots];
-                //
-                //     updatedSlots[index] = {
-                //         ...updatedSlots[index],
-                //         slotDimensions: newDims
-                //     }
-                //
-                //     return updatedSlots;
-                // });
+
+                const { width, height } = entries[0].contentRect;
+
+                const newDims = {
+                    width,
+                    height,
+                    aspectRatio: width / height
+                }
+
+                setSlots((prevSlots) => {
+                    if (!wasResized(prevSlots[index], newDims))
+                        return prevSlots;
+
+                    const updatedSlots = [...prevSlots];
+
+                    updatedSlots[index] = {
+                        ...updatedSlots[index],
+                        slotDimensions: newDims
+                    }
+
+                    return updatedSlots;
+                });
             });
 
             slotObserver.observe(slotNode);
@@ -90,15 +89,23 @@ export function useGridState(numSlots) {
         activeImageUrls.current.add(newImgObj);
 
         const activeSlotNode = slotRefs.current[selectedSlotIndex];
-        const slotRect = activeSlotNode ? activeSlotNode.getBoundingClientRect()
-            : { width: 0, height: 0 }
 
-        const { imgWidth, imgHeight } = await new Promise((resolve) => {
+        const slotDims = activeSlotNode
+            ? domRectToDimensions(activeSlotNode.getBoundingClientRect())
+            : { width: 0, height: 0, aspectRatio: 0 }
+
+        const { imgDims } = await new Promise((resolve) => {
             const img = new Image();
 
+            // NEXT STEP: I think we have to then somehow pass this to the
+            // <img> tag styles.
+
             img.onload = () => resolve({
-                imgWidth: img.naturalWidth,
-                imgHeight: img.naturalHeight
+                imgDims: useImgSizeAdjustment(
+                    img.naturalWidth,
+                    img.naturalHeight,
+                    slotDims
+                )
             });
 
             img.src = newImgObj;
@@ -116,23 +123,10 @@ export function useGridState(numSlots) {
                 activeImageUrls.current.delete(oldImgObj.url);
             }
 
-            // WONDERING: Should we change the image dimensions here if
-            //            different from the slot's?
-
             updatedSlots[selectedSlotIndex] = {
                 imgUrl: newImgObj,
-
-                imgDimensions: {
-                    width: imgWidth,
-                    height: imgHeight,
-                    aspectRatio: imgWidth / imgHeight
-                },
-
-                slotDimensions: {
-                    width: slotRect.width,
-                    height: slotRect.height,
-                    aspectRatio: slotRect.width / slotRect.height
-                }
+                imgDimensions: imgDims,
+                slotDimensions: slotDims
             };
 
             return updatedSlots;
@@ -210,4 +204,16 @@ function wasResized(slot, newDims) {
     const slotHeight = slot.slotDimensions.height;
 
     return slotWidth !== newDims.width || slotHeight !== newDims.height;
+}
+
+/**
+ * @param {DOMRect} rect
+ * @returns {Dimensions}
+ */
+function domRectToDimensions(rect) {
+    return {
+        width: rect.width,
+        height: rect.height,
+        aspectRatio: rect.width / rect.height
+    }
 }
