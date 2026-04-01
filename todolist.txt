@@ -1,1 +1,8 @@
-- Update the slot objects from string to the custom ImageSlot.
+- BUG: When modifying the canvas in any way that would resize slots, the images
+       already there get deformed. Need to have them update in those cases as well.
+
+- BUG: When exporting the collage, it looks like it went out of the canvas, when
+       in reality, that's not the case.
+
+- FEATURE: Implement slider with image slots spacing.
+- FEATURE: Implement collage background color.
