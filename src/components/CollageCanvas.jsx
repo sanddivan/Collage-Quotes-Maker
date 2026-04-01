@@ -42,7 +42,14 @@ export default function CollageCanvas({ dimensions, layout }) {
                             onClick={() => grid.handleSlotClick(index)}
                         >
                             {slotData?.imgUrl ? (
-                                <img src={slotData.imgUrl} alt={`Image Slot ${index}`} />
+                                <img
+                                    src={slotData.imgUrl}
+                                    alt={`Image Slot ${index}`}
+                                    style={{
+                                        width: `${slotData.imgDimensions.width}px`,
+                                        height: `${slotData.imgDimensions.height}px`
+                                    }}
+                                />
                             ) : (
                                 <div className={styles.placeholder}>
                                     <p>Click to Add Image</p>
