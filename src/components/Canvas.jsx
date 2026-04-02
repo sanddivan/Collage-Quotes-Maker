@@ -11,7 +11,9 @@ export default function Canvas({ width, height }) {
 
     return (
         <div className={styles.workspace}>
-            <div className={styles.theCanvas} style={canvasDimensionsCss}></div>
+            <div className={styles.theCanvas} style={canvasDimensionsCss}>
+                <p>Hello from the canvas!</p>
+            </div>
         </div>
     );
 }

@@ -11,8 +11,11 @@
 }
 
 .theCanvas {
-    --canvas-width: 1280;
-    --canvas-height: 720;
+    --canvas-width: 1280px;
+    --canvas-height: 720px;
+
+    width: var(--canvas-width);
+    height: var(--canvas-height);
 
     background: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
