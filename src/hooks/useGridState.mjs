@@ -39,26 +39,34 @@ export function useGridState(numSlots) {
             if (!slotNode) return ;
 
             const slotObserver = new ResizeObserver((entries) => {
-                // This is something I need to reason more about.
-
                 const { width, height } = entries[0].contentRect;
 
-                const newDims = {
+                const newSlotDims = {
                     width,
                     height,
                     aspectRatio: width / height
                 }
 
                 setSlots((prevSlots) => {
-                    if (!wasResized(prevSlots[index], newDims))
+                    const slotToModify = prevSlots[index];
+
+                    if (!wasResized(slotToModify, newSlotDims))
                         return prevSlots;
 
-                    const updatedSlots = [...prevSlots];
+                    // If this slot already has an image in it, then we have to
+                    // adjust its size as well to preserve integrity, and prevent
+                    // unexpected squishing or stretching.
 
-                    updatedSlots[index] = {
-                        ...updatedSlots[index],
-                        slotDimensions: newDims
+                    if (slotToModify.imgUrl !== '') {
+                        slotToModify.imgCurrDimensions = useImgSizeAdjustment(
+                            prevSlots[index].imgOrigDimensions,
+                            newSlotDims
+                        )
                     }
+
+                    const updatedSlots = [...prevSlots];
+                    slotToModify.slotDimensions = newSlotDims;
+                    updatedSlots[index] = slotToModify;
 
                     return updatedSlots;
                 });
@@ -94,18 +102,18 @@ export function useGridState(numSlots) {
             ? domRectToDimensions(activeSlotNode.getBoundingClientRect())
             : { width: 0, height: 0, aspectRatio: 0 }
 
-        const { imgDims } = await new Promise((resolve) => {
+        const { imgNaturalDims, imgRenderDims } = await new Promise((resolve) => {
             const img = new Image();
 
-            // NEXT STEP: I think we have to then somehow pass this to the
-            // <img> tag styles.
+            const dims = {
+                width: img.naturalWidth,
+                height: img.naturalHeight,
+                aspectRatio: img.naturalWidth / img.naturalHeight
+            };
 
             img.onload = () => resolve({
-                imgDims: useImgSizeAdjustment(
-                    img.naturalWidth,
-                    img.naturalHeight,
-                    slotDims
-                )
+                imgNaturalDims: dims,
+                imgRenderDims: useImgSizeAdjustment(dims, slotDims)
             });
 
             img.src = newImgObj;
@@ -125,7 +133,8 @@ export function useGridState(numSlots) {
 
             updatedSlots[selectedSlotIndex] = {
                 imgUrl: newImgObj,
-                imgDimensions: imgDims,
+                imgOrigDimensions: imgNaturalDims,
+                imgCurrDimensions: imgRenderDims,
                 slotDimensions: slotDims
             };
 

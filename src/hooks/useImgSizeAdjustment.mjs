@@ -1,20 +1,16 @@
 // File: useImgSizeAdjustment.mjs
 
 /**
- * @param {number} imgNaturalWidth
- * @param {number} imgNaturalHeight
+ * @param {Dimensions} imgNaturalDimensions
  * @param {Dimensions} slotDimensions
  * @returns {Dimensions}
  */
 
 export function useImgSizeAdjustment(
-    imgNaturalWidth,
-    imgNaturalHeight,
+    imgNaturalDimensions,
     slotDimensions
 ) {
-    if (imgNaturalWidth === 0 || imgNaturalHeight === 0) {
-        console.error('Image has nonexistent width or height.');
-
+    if (imgNaturalDimensions.width === 0 || imgNaturalDimensions.height === 0) {
         return {
             width: 0,
             height: 0,
@@ -22,8 +18,8 @@ export function useImgSizeAdjustment(
         }
     }
 
-    let imgRenderWidth = imgNaturalWidth;
-    let imgRenderHeight = imgNaturalHeight;
+    let imgRenderWidth = imgNaturalDimensions.width;
+    let imgRenderHeight = imgNaturalDimensions.height;
     let imgAspectRatio = imgRenderWidth / imgRenderHeight;
 
     // If the image is longer than the slot, then we have to fit the height

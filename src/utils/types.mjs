@@ -27,7 +27,8 @@
  * @typedef {Object} ImageSlot
  *
  * @property {string} imgUrl
- * @property {Dimensions} imgDimensions
+ * @property {Dimensions} imgOrigDimensions
+ * @property {Dimensions} imgCurrDimensions
  * @property {Dimensions} slotDimensions
  */
 

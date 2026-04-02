@@ -46,8 +46,8 @@ export default function CollageCanvas({ dimensions, layout }) {
                                     src={slotData.imgUrl}
                                     alt={`Image Slot ${index}`}
                                     style={{
-                                        width: `${slotData.imgDimensions.width}px`,
-                                        height: `${slotData.imgDimensions.height}px`
+                                        width: `${slotData.imgCurrDimensions.width}px`,
+                                        height: `${slotData.imgCurrDimensions.height}px`
                                     }}
                                 />
                             ) : (
