@@ -1,6 +1,6 @@
 // File: App.jsx
 
-import { DEFAULT_CANVAS_HEIGHT, DEFAULT_CANVAS_WIDTH } from "./constants.js";
+import { useCanvasContext } from "./hooks/useCanvasContext.js";
 import { useLayoutGenerator } from "./hooks/useLayoutGenerator.js";
 
 import Canvas from "./components/Canvas.jsx";
@@ -11,12 +11,14 @@ import Sidebar from "./components/Sidebar.jsx";
  */
 
 export default function App() {
+    const canvasContext = useCanvasContext();
     const layoutsDict = useLayoutGenerator();
 
     return (
         <div className="app">
-            <Sidebar layouts={layoutsDict} />
-            <Canvas width={DEFAULT_CANVAS_WIDTH} height={DEFAULT_CANVAS_HEIGHT} />
+            <Sidebar canvasCtx={canvasContext} layouts={layoutsDict} />
+            <Canvas width={canvasContext.dimensions.width}
+                    height={canvasContext.dimensions.height} />
         </div>
     );
 }

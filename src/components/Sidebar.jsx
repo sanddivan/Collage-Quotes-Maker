@@ -1,16 +1,17 @@
 // File: Sidebar.jsx
 
-import { DEFAULT_CANVAS_HEIGHT, DEFAULT_CANVAS_WIDTH } from "../constants.js";
 import styles from "./Sidebar.module.css";
 
+/** @typedef {import("../types.js").CanvasContext} CanvasContext */
 /** @typedef {import("../types.js").Layout} Layout */
 
 /**
+ * @param {CanvasContext} canvasCtx
  * @param {Record<string, Layout>} layouts
  * @returns {React.JSX.Element}
  */
 
-export default function Sidebar({ layouts }) {
+export default function Sidebar({ canvasCtx, layouts }) {
     return (
         <div className={styles.sidebar}>
             <h2>Settings</h2>
@@ -19,7 +20,11 @@ export default function Sidebar({ layouts }) {
                 <label>Canvas Width: </label>
                 <input
                     type="number"
-                    value={DEFAULT_CANVAS_WIDTH}
+                    value={canvasCtx.dimensions.width}
+                    onChange={(e) => canvasCtx.updateDimensionCallback(
+                        'width',
+                        e.target.value
+                    )}
                 />
             </div>
 
@@ -27,7 +32,11 @@ export default function Sidebar({ layouts }) {
                 <label>Canvas Height: </label>
                 <input
                     type="number"
-                    value={DEFAULT_CANVAS_HEIGHT}
+                    value={canvasCtx.dimensions.height}
+                    onChange={(e) => canvasCtx.updateDimensionCallback(
+                        'height',
+                        e.target.value
+                    )}
                 />
             </div>
 
