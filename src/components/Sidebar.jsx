@@ -21,6 +21,7 @@ export default function Sidebar({ canvasCtx, layouts }) {
                 <input
                     type="number"
                     value={canvasCtx.dimensions.width}
+                    min="0"
                     onChange={(e) => canvasCtx.updateDimensionCallback(
                         'width',
                         e.target.value
@@ -33,6 +34,7 @@ export default function Sidebar({ canvasCtx, layouts }) {
                 <input
                     type="number"
                     value={canvasCtx.dimensions.height}
+                    min="0"
                     onChange={(e) => canvasCtx.updateDimensionCallback(
                         'height',
                         e.target.value

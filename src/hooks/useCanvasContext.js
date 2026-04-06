@@ -23,7 +23,9 @@ export function useCanvasContext() {
             return ;
         }
 
-        const parsedNewValue = newValue ? parseInt(newValue, 10) : 0;
+        // We can't have negative dimension values :)
+        let parsedNewValue = newValue ? parseInt(newValue, 10) : 0;
+        if (parsedNewValue < 0) parsedNewValue = 0;
 
         setDims(prevDimsState => {
             const newWidth = dim === 'width' ? parsedNewValue : prevDimsState.width;
