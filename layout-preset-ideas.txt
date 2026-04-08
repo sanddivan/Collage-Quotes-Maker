@@ -1,0 +1,26 @@
+Static Layouts to Support:
+
+- Triple Shard
+
+Dynamic Layouts and Presets to Support:
+
+- N x M
+- N Triangles (up, down, ...)
+- N full height as columns and M normal height as rows
+- N full length as rows and M normal length as columns
+
+Future Work:
+
+- N full length/height as rows/columns in the middle and M normal length/height at the sides
+- Honkai Star Rail Eidolons
+- Dynamic Sharding
+
+General Workflow:
+
+- Have a component in charge of calculating the percentages of the slots in
+  the canvas.
+- Cache those used so we don't have to recalculate if the user changes their
+  mind and wants to revert.
+- We'll have to generate multiple variations of the sidebar, since each layout
+  family (uniform, full/small, shards) has a different set of configuration
+  parameters. Some are universal though, such as width, height, and colors.
