@@ -28,8 +28,8 @@
  * @typedef {Object} CanvasContext
  * @property {Dimensions} dimensions
  * @property {DimensionUpdater} updateDimensionCallback
- * @property {Layout | null} layout
- * @property {Dispatch<SetStateAction<string>>} setLayoutAction
+ * @property {string | null} layoutKey
+ * @property {Dispatch<SetStateAction<string | null>>} setLayoutKeyAction
  */
 
 export {};

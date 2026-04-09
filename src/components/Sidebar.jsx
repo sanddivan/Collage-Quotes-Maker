@@ -1,17 +1,17 @@
 // File: Sidebar.jsx
 
 import styles from "./Sidebar.module.css";
+import baseLayoutData from "../data/base-layouts.json";
+import LayoutsGrid from "./LayoutsGrid.jsx";
 
 /** @typedef {import("../types.js").CanvasContext} CanvasContext */
-/** @typedef {import("../types.js").Layout} Layout */
 
 /**
  * @param {CanvasContext} canvasCtx
- * @param {Record<string, Layout>} layouts
  * @returns {React.JSX.Element}
  */
 
-export default function Sidebar({ canvasCtx, layouts }) {
+export default function Sidebar({ canvasCtx }) {
     return (
         <div className={styles.sidebar}>
             <h2>Settings</h2>
@@ -44,11 +44,16 @@ export default function Sidebar({ canvasCtx, layouts }) {
 
             <h3>Layout</h3>
 
-            <div className="layout-picker">
-                {Object.keys(layouts).map((lKey) => (
-                    <button key={lKey}>{lKey}</button>
+            <div className={styles.layoutFamilyPicker}>
+                {Object.keys(baseLayoutData).map((layoutFamilyKey) => (
+                    <button
+                        key={layoutFamilyKey}
+                        className={styles.layoutBtn}
+                    >
+                        {layoutFamilyKey}
+                    </button>
                 ))}
             </div>
         </div>
-    )
+    );
 }

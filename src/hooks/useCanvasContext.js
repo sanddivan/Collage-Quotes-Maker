@@ -43,12 +43,12 @@ export function useCanvasContext() {
         });
     }, []);
 
-    const [layout, setLayout] = useState(null);
+    const [layoutKey, setLayoutKey] = useState(null);
 
     return {
         dimensions: dims,
         updateDimensionCallback: updateDim,
-        layout: layout,
-        setLayoutAction: setLayout
+        layoutKey: layoutKey,
+        setLayoutKeyAction: setLayoutKey
     };
 }

@@ -12,11 +12,11 @@ import Sidebar from "./components/Sidebar.jsx";
 
 export default function App() {
     const canvasContext = useCanvasContext();
-    const layoutsDict = useLayoutGenerator();
+    // const layoutsDict = useLayoutGenerator();
 
     return (
         <div className="app">
-            <Sidebar canvasCtx={canvasContext} layouts={layoutsDict} />
+            <Sidebar canvasCtx={canvasContext} />
             <Canvas width={canvasContext.dimensions.width}
                     height={canvasContext.dimensions.height} />
         </div>
