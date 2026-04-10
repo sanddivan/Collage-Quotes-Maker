@@ -2,9 +2,11 @@
 
 import styles from "./Sidebar.module.css";
 import baseLayoutData from "../data/base-layouts.json";
+import LayoutsGrid from "./LayoutsGrid.jsx";
 
 /**
- * @param {import("../types.js").CanvasContext} canvasCtx
+ * @param {Object} props
+ * @param {import("../types.js").CanvasContext} props.canvasCtx
  * @returns {React.JSX.Element}
  */
 
@@ -59,6 +61,12 @@ export default function Sidebar({ canvasCtx }) {
                     </button>
                 ))}
             </div>
+
+            <LayoutsGrid
+                layoutsData={baseLayoutData}
+                layoutCtx={layoutCtx}
+                btnStyle={styles.layoutBtn}
+            />
         </div>
     );
 }

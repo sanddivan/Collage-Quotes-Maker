@@ -3,7 +3,8 @@
 import styles from "./Canvas.module.css";
 
 /**
- * @param {import("../types.js").CanvasContext} ctx
+ * @param {Object} props
+ * @param {import("../types.js").CanvasContext} props.canvasCtx
  * @returns {React.JSX.Element}
  */
 
