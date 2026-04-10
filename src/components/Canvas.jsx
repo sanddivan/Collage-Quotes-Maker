@@ -2,17 +2,27 @@
 
 import styles from "./Canvas.module.css";
 
-export default function Canvas({ width, height }) {
+/**
+ * @param {import("../types.js").CanvasContext} ctx
+ * @returns {React.JSX.Element}
+ */
+
+export default function Canvas({ canvasCtx }) {
     /** @type {React.CSSProperties} */
     const canvasDimensionsCss = {
-        '--canvas-width': `${width}px`,
-        '--canvas-height': `${height}px`
+        '--canvas-width': `${canvasCtx.dimensions.width}px`,
+        '--canvas-height': `${canvasCtx.dimensions.height}px`
     }
+
+    const layoutFamily = canvasCtx.layoutContext.layoutFamilyKey ?? "Family not set";
+    const layout = canvasCtx.layoutContext.layoutKey ?? "Layout not set";
 
     return (
         <div className={styles.workspace}>
             <div className={styles.theCanvas} style={canvasDimensionsCss}>
                 <p>Hello from the canvas!</p>
+                <p>Layout Family: {layoutFamily}</p>
+                <p>Layout Name: {layout}</p>
             </div>
         </div>
     );

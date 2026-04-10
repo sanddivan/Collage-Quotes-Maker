@@ -2,16 +2,15 @@
 
 import styles from "./Sidebar.module.css";
 import baseLayoutData from "../data/base-layouts.json";
-import LayoutsGrid from "./LayoutsGrid.jsx";
-
-/** @typedef {import("../types.js").CanvasContext} CanvasContext */
 
 /**
- * @param {CanvasContext} canvasCtx
+ * @param {import("../types.js").CanvasContext} canvasCtx
  * @returns {React.JSX.Element}
  */
 
 export default function Sidebar({ canvasCtx }) {
+    const layoutCtx = canvasCtx.layoutContext;
+
     return (
         <div className={styles.sidebar}>
             <h2>Settings</h2>
@@ -45,12 +44,18 @@ export default function Sidebar({ canvasCtx }) {
             <h3>Layout</h3>
 
             <div className={styles.layoutFamilyPicker}>
-                {Object.keys(baseLayoutData).map((layoutFamilyKey) => (
+                {Object.keys(baseLayoutData).map((familyKey) => (
                     <button
-                        key={layoutFamilyKey}
+                        key={familyKey}
                         className={styles.layoutBtn}
+                        onClick={() => layoutCtx.setLayoutFamilyKeyAction(familyKey)}
+                        style={{
+                            fontWeight: familyKey === layoutCtx.layoutFamilyKey
+                                ? "bold"
+                                : "normal"
+                        }}
                     >
-                        {layoutFamilyKey}
+                        {familyKey}
                     </button>
                 ))}
             </div>

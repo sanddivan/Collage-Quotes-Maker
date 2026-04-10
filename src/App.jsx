@@ -1,7 +1,6 @@
 // File: App.jsx
 
 import { useCanvasContext } from "./hooks/useCanvasContext.js";
-import { useLayoutGenerator } from "./hooks/useLayoutGenerator.js";
 
 import Canvas from "./components/Canvas.jsx";
 import Sidebar from "./components/Sidebar.jsx";
@@ -12,13 +11,11 @@ import Sidebar from "./components/Sidebar.jsx";
 
 export default function App() {
     const canvasContext = useCanvasContext();
-    // const layoutsDict = useLayoutGenerator();
 
     return (
         <div className="app">
             <Sidebar canvasCtx={canvasContext} />
-            <Canvas width={canvasContext.dimensions.width}
-                    height={canvasContext.dimensions.height} />
+            <Canvas canvasCtx={canvasContext} />
         </div>
     );
 }

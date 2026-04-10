@@ -2,12 +2,10 @@
 
 import { useCallback, useState } from "react";
 import { DEFAULT_CANVAS_HEIGHT, DEFAULT_CANVAS_WIDTH } from "../constants.js";
-
-/** @typedef {import("../types.js").CanvasContext} CanvasContext */
-/** @typedef {import("../types.js").Layout} Layout */
+import { useLayoutContext } from "./useLayoutContext.js";
 
 /**
- * @returns {CanvasContext}
+ * @returns {import("../types.js").CanvasContext}
  */
 
 export function useCanvasContext() {
@@ -43,12 +41,11 @@ export function useCanvasContext() {
         });
     }, []);
 
-    const [layoutKey, setLayoutKey] = useState(null);
+    const layoutCtx = useLayoutContext();
 
     return {
         dimensions: dims,
         updateDimensionCallback: updateDim,
-        layoutKey: layoutKey,
-        setLayoutKeyAction: setLayoutKey
+        layoutContext: layoutCtx
     };
 }
