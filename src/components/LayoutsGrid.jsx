@@ -9,10 +9,7 @@
  */
 
 export default function LayoutsGrid({ layoutsData, layoutCtx, btnStyle }) {
-    console.log("In LayoutsGrid");
     const currFamilyKey = layoutCtx.layoutFamilyKey
-
-    console.log(layoutCtx)
 
     if (!layoutsData || !currFamilyKey) {
         return (<div></div>);

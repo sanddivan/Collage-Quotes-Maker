@@ -11,27 +11,15 @@ import Collage from "./Collage.jsx";
  */
 
 export default function Canvas({ canvasCtx }) {
-    // /** @type {React.CSSProperties} */
-    // const canvasDimensionsCss = {
-    //     '--canvas-width': `${canvasCtx.dimensions.width}px`,
-    //     '--canvas-height': `${canvasCtx.dimensions.height}px`
-    // }
-
-    // const layoutFamily = canvasCtx.layoutContext.layoutFamilyKey ?? "Family not set";
-    // const layout = canvasCtx.layoutContext.layoutKey ?? "Layout not set";
-
-    console.log("In Canvas");
-
     const layoutCtx = canvasCtx.layoutContext;
 
-    const layoutFamily = layoutCtx.layoutFamilyKey
+    const layoutFamilyData = layoutCtx.layoutFamilyKey
         ? baseLayoutData[layoutCtx.layoutFamilyKey]
         : null;
 
-    const theLayoutSlots = layoutFamily ? layoutFamily[layoutCtx.layoutKey] : null;
-
-    console.log(layoutCtx);
-    console.log(theLayoutSlots);
+    const parsedLayout = layoutFamilyData
+        ? parseLayoutData(layoutCtx.layoutKey, layoutFamilyData[layoutCtx.layoutKey])
+        : null;
 
     return (
         <div className={styles.workspace}>
@@ -44,12 +32,29 @@ export default function Canvas({ canvasCtx }) {
             <Collage
                 canvasDims={canvasCtx.dimensions}
                 canvasStyle={styles.theCanvas}
-                layoutData={
-                    theLayoutSlots
-                        ? { name: layoutCtx.layoutKey, slots: theLayoutSlots }
-                        : null
-                }
+                layoutData={parsedLayout}
             />
         </div>
     );
+}
+
+/**
+ * @param {string} lName
+ * @param {Object[]} lData
+ * @returns {import("../types.js").Layout | null}
+ */
+
+function parseLayoutData(lName, lData) {
+    if (!lName || !lData) {
+        return null;
+    }
+
+    return {
+        name: lName,
+        slots: lData.map((slotData) => ({
+            id: slotData["slotId"],
+            points: slotData["points"],
+            imageUrl: null
+        }))
+    };
 }

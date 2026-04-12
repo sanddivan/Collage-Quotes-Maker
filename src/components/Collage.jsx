@@ -18,23 +18,12 @@ export default function Collage({ canvasDims, canvasStyle, layoutData }) {
         '--canvas-height': `${canvasDims.height}px`
     }
 
-    console.log("In Collage");
-    console.log(canvasDims);
-    console.log(canvasStyle);
-    console.log(layoutData);
-
     if (!canvasDims || !layoutData) {
         return (<div className={canvasStyle} style={canvasDimensionsCss}></div>);
     }
 
-    console.log(canvasDims);
-    console.log(canvasStyle);
-    console.log(layoutData);
-
     // Passing 0 right now as spacing, since that feature hasn't been implemented yet.
     const slotsToRender = useSlotsMeasures(layoutData.slots, 0);
-
-    console.log(slotsToRender);
 
     return (
         <div className={canvasStyle} style={canvasDimensionsCss}>
@@ -52,8 +41,6 @@ export default function Collage({ canvasDims, canvasStyle, layoutData }) {
     );
 }
 
-// FIXME: In SvgDefs() and SvgRenders(), the slot id's are being mapped to undefined.
-
 /**
  * @param props
  * @param {Array<import("../types.js").ImageSlot>} props.slotsData
@@ -61,9 +48,6 @@ export default function Collage({ canvasDims, canvasStyle, layoutData }) {
  */
 
 function SvgDefs({ slotsData }) {
-    console.log("In SvgDefs");
-    console.log(slotsData);
-
     return (
         <defs>
             {slotsData.map((slot) => {
@@ -88,17 +72,10 @@ function SvgDefs({ slotsData }) {
  */
 
 function SvgRenders({ slotsData }) {
-    console.log("In SvgRenders");
-    console.log(slotsData);
-
     return (
         <>
             {slotsData.map((slot) => {
-                // FIXME: The "key" attribute has to be passed directly because...
-                //        because React :/
-
                 const imgAttrs = {
-                    key: `img-${slot.id}`,
                     width: "100",
                     height: "100",
                     clipPath: `url(#clip-id-${slot.id})`,
@@ -120,7 +97,7 @@ function SvgRenders({ slotsData }) {
 
                 return (
                     <g key={slot.id} className={styles.shardGroup}>
-                        <image {...imgAttrs} />
+                        <image key={`img-${slot.id}`} {...imgAttrs} />
                         <polygon
                             {...borderAttrs}
                             onClick={() => console.log(`Slot ${slot.id} clicked!`)}
