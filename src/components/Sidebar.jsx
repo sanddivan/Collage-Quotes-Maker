@@ -11,7 +11,9 @@ import LayoutsGrid from "./LayoutsGrid.jsx";
  */
 
 export default function Sidebar({ canvasCtx }) {
+    console.log("In Sidebar");
     const layoutCtx = canvasCtx.layoutContext;
+    console.log(layoutCtx);
 
     return (
         <div className={styles.sidebar}>

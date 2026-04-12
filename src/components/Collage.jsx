@@ -1,28 +1,40 @@
 // File: Collage.jsx
 
 import { useSlotsMeasures } from "../hooks/useSlotsMeasures.js";
+import styles from "./Collage.module.css";
 
 /**
  * @param {Object} props
  * @param {import("../types.js").Dimensions} props.canvasDims
  * @param {string} props.canvasStyle
- * @param {import("../types.js").Layout} props.layout
+ * @param {import("../types.js").Layout} props.layoutData
  * @returns {React.JSX.Element}
  */
 
-export default function Collage({ canvasDims, canvasStyle, layout }) {
+export default function Collage({ canvasDims, canvasStyle, layoutData }) {
     /** @type {React.CSSProperties} */
     const canvasDimensionsCss = {
         '--canvas-width': `${canvasDims.width}px`,
         '--canvas-height': `${canvasDims.height}px`
     }
 
-    if (!canvasDims || !layout) {
+    console.log("In Collage");
+    console.log(canvasDims);
+    console.log(canvasStyle);
+    console.log(layoutData);
+
+    if (!canvasDims || !layoutData) {
         return (<div className={canvasStyle} style={canvasDimensionsCss}></div>);
     }
 
+    console.log(canvasDims);
+    console.log(canvasStyle);
+    console.log(layoutData);
+
     // Passing 0 right now as spacing, since that feature hasn't been implemented yet.
-    const slotsToRender = useSlotsMeasures(layout.slots, 0);
+    const slotsToRender = useSlotsMeasures(layoutData.slots, 0);
+
+    console.log(slotsToRender);
 
     return (
         <div className={canvasStyle} style={canvasDimensionsCss}>
@@ -40,6 +52,8 @@ export default function Collage({ canvasDims, canvasStyle, layout }) {
     );
 }
 
+// FIXME: In SvgDefs() and SvgRenders(), the slot id's are being mapped to undefined.
+
 /**
  * @param props
  * @param {Array<import("../types.js").ImageSlot>} props.slotsData
@@ -47,6 +61,9 @@ export default function Collage({ canvasDims, canvasStyle, layout }) {
  */
 
 function SvgDefs({ slotsData }) {
+    console.log("In SvgDefs");
+    console.log(slotsData);
+
     return (
         <defs>
             {slotsData.map((slot) => {
@@ -71,9 +88,15 @@ function SvgDefs({ slotsData }) {
  */
 
 function SvgRenders({ slotsData }) {
+    console.log("In SvgRenders");
+    console.log(slotsData);
+
     return (
         <>
             {slotsData.map((slot) => {
+                // FIXME: The "key" attribute has to be passed directly because...
+                //        because React :/
+
                 const imgAttrs = {
                     key: `img-${slot.id}`,
                     width: "100",
@@ -92,11 +115,11 @@ function SvgRenders({ slotsData }) {
                     stroke: "#0000FF", // Using "blue" to easily identify it for now.
                     strokeWidth: "1", // Placeholder too.
                     vectorEffect: "non-scaling-stroke",
-                    className: "shard-border"
+                    className: styles.shardBorder
                 }
 
                 return (
-                    <g key={slot.id} className="shard-group">
+                    <g key={slot.id} className={styles.shardGroup}>
                         <image {...imgAttrs} />
                         <polygon
                             {...borderAttrs}

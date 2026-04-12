@@ -20,8 +20,18 @@ export default function Canvas({ canvasCtx }) {
     // const layoutFamily = canvasCtx.layoutContext.layoutFamilyKey ?? "Family not set";
     // const layout = canvasCtx.layoutContext.layoutKey ?? "Layout not set";
 
+    console.log("In Canvas");
+
     const layoutCtx = canvasCtx.layoutContext;
-    const theLayout = layoutCtx.layoutKey ? baseLayoutData[layoutCtx.layoutKey] : null;
+
+    const layoutFamily = layoutCtx.layoutFamilyKey
+        ? baseLayoutData[layoutCtx.layoutFamilyKey]
+        : null;
+
+    const theLayoutSlots = layoutFamily ? layoutFamily[layoutCtx.layoutKey] : null;
+
+    console.log(layoutCtx);
+    console.log(theLayoutSlots);
 
     return (
         <div className={styles.workspace}>
@@ -34,7 +44,11 @@ export default function Canvas({ canvasCtx }) {
             <Collage
                 canvasDims={canvasCtx.dimensions}
                 canvasStyle={styles.theCanvas}
-                layout={theLayout}
+                layoutData={
+                    theLayoutSlots
+                        ? { name: layoutCtx.layoutKey, slots: theLayoutSlots }
+                        : null
+                }
             />
         </div>
     );
