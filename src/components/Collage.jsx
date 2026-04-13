@@ -3,6 +3,10 @@
 import { useContentMeasurements } from "../hooks/useContentMeasurements.js";
 import styles from "./Collage.module.css";
 
+// BIG TODO: We're going to need to classify the different types of shards/slots
+//           somehow because we also need their centers for the placeholders.
+//           And maybe for implementing spacing as well.
+
 /**
  * @param {Object} props
  * @param {import("../types.js").Dimensions} props.canvasDims
@@ -88,7 +92,7 @@ function SvgRenders({ slotsData }) {
                 };
 
                 if (slot.imageUrl) {
-                    imgAttrs['src'] = slot.imageUrl;
+                    imgAttrs['href'] = slot.imageUrl;
                 }
 
                 const borderAttrs = {
