@@ -1,6 +1,6 @@
 // File: Collage.jsx
 
-import { useSlotsMeasures } from "../hooks/useSlotsMeasures.js";
+import { useContentMeasurements } from "../hooks/useContentMeasurements.js";
 import styles from "./Collage.module.css";
 
 /**
@@ -12,23 +12,28 @@ import styles from "./Collage.module.css";
  */
 
 export default function Collage({ canvasDims, canvasStyle, layoutData }) {
+    if (!canvasDims) {
+        return (<div></div>);
+    }
+
     /** @type {React.CSSProperties} */
     const canvasDimensionsCss = {
         '--canvas-width': `${canvasDims.width}px`,
         '--canvas-height': `${canvasDims.height}px`
     }
 
-    if (!canvasDims || !layoutData) {
+    if (!layoutData) {
         return (<div className={canvasStyle} style={canvasDimensionsCss}></div>);
     }
 
     // Passing 0 right now as spacing, since that feature hasn't been implemented yet.
-    const slotsToRender = useSlotsMeasures(layoutData.slots, 0);
+    const slotsToRender = useContentMeasurements(canvasDims, layoutData.slots, 0);
+    const svgViewBox = `0 0 ${canvasDims.width} ${canvasDims.height}`;
 
     return (
         <div className={canvasStyle} style={canvasDimensionsCss}>
             <svg
-                viewBox="0 0 100 100"
+                viewBox={svgViewBox}
                 width="100%"
                 height="100%"
                 style={{ display: "block" }}
