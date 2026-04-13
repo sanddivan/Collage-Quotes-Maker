@@ -88,7 +88,7 @@ function SvgRenders({ slotsData }) {
                 };
 
                 if (slot.imageUrl) {
-                    imgAttrs['href'] = slot.imageUrl;
+                    imgAttrs['src'] = slot.imageUrl;
                 }
 
                 const borderAttrs = {
@@ -96,13 +96,19 @@ function SvgRenders({ slotsData }) {
                     fill: "transparent",
                     stroke: "#0000FF", // Using "blue" to easily identify it for now.
                     strokeWidth: "1", // Placeholder too.
-                    vectorEffect: "non-scaling-stroke",
-                    className: styles.shardBorder
+                    vectorEffect: "non-scaling-stroke"
                 }
 
                 return (
-                    <g key={slot.id} className={styles.shardGroup}>
-                        <image key={`img-${slot.id}`} {...imgAttrs} />
+                    <g key={slot.id} className={styles.slot}>
+                        {/*FIXME: The placeholder text is not showing.*/}
+                        {slot.imageUrl ? (
+                            <image key={`img-${slot.id}`} {...imgAttrs} />
+                        ) : (
+                            <div className={styles.placeholder}>
+                                <p>Click to Add Image!</p>
+                            </div>
+                        )}
                         <polygon
                             {...borderAttrs}
                             onClick={() => console.log(`Slot ${slot.id} clicked!`)}
@@ -111,5 +117,5 @@ function SvgRenders({ slotsData }) {
                 );
             })}
         </>
-    )
+    );
 }
