@@ -24,3 +24,25 @@ General Workflow:
 - We'll have to generate multiple variations of the sidebar, since each layout
   family (uniform, full/small, shards) has a different set of configuration
   parameters. Some are universal though, such as width, height, and colors.
+
+Notes About Composition Here:
+
+- Image Slots
+- All slots have an id
+- All slots have an array of points
+
+- Slots have a center (x, y). This varies depending on the slot's shape.
+- Slots have a shape, which is variable.
+
+- Shapes have some of this in common:
+  * Points
+  * Center
+  * Shape Type
+
+- So we could say:
+
+- Image Slots:
+  * SlotId
+  * Shape
+
+- We should find a way to calculate the containers.
