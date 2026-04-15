@@ -5,7 +5,7 @@ import { DEFAULT_CANVAS_HEIGHT, DEFAULT_CANVAS_WIDTH } from "../constants.js";
 import { useLayoutContext } from "./useLayoutContext.js";
 
 /**
- * @returns {import("../types.js").CanvasContext}
+ * @returns {import("../types/canvasTypes.js").CanvasContext}
  */
 
 export function useCanvasContext() {

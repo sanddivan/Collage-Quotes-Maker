@@ -6,7 +6,7 @@ import LayoutsGrid from "./LayoutsGrid.jsx";
 
 /**
  * @param {Object} props
- * @param {import("../types.js").CanvasContext} props.canvasCtx
+ * @param {import("../types/canvasTypes.js").CanvasContext} props.canvasCtx
  * @returns {React.JSX.Element}
  */
 

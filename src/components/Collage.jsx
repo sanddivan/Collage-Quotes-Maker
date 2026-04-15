@@ -9,9 +9,9 @@ import styles from "./Collage.module.css";
 
 /**
  * @param {Object} props
- * @param {import("../types.js").Dimensions} props.canvasDims
+ * @param {import("../types/canvasTypes.js").Dimensions} props.canvasDims
  * @param {string} props.canvasStyle
- * @param {import("../types.js").Layout} props.layoutData
+ * @param {import("../types/layoutTypes.js").Layout} props.layoutData
  * @returns {React.JSX.Element}
  */
 
@@ -52,7 +52,7 @@ export default function Collage({ canvasDims, canvasStyle, layoutData }) {
 
 /**
  * @param props
- * @param {Array<import("../types.js").ImageSlot>} props.slotsData
+ * @param {import("../types/slotTypes.js").ImageSlot[]} props.slotsData
  * @returns {React.JSX.Element}
  */
 
@@ -76,7 +76,7 @@ function SvgDefs({ slotsData }) {
 
 /**
  * @param props
- * @param {Array<import("../types.js").ImageSlot>} props.slotsData
+ * @param {import("../types/slotTypes.js").ImageSlot[]} props.slotsData
  * @returns {React.JSX.Element}
  */
 

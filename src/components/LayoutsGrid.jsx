@@ -3,32 +3,24 @@
 /**
  * @param {Object} props
  * @param {import("../data/base-layouts.json")} props.layoutsData
- * @param {import("../types.js").LayoutContext} props.layoutCtx
+ * @param {import("../types/layoutTypes.js").LayoutContext} props.layoutCtx
  * @param {string} props.btnStyle
  * @returns {React.JSX.Element}
  */
 
 export default function LayoutsGrid({ layoutsData, layoutCtx, btnStyle }) {
-    const currFamilyKey = layoutCtx.layoutFamilyKey
-
-    if (!layoutsData || !currFamilyKey) {
+    if (!layoutsData || !layoutCtx.layoutFamily) {
         return (<div></div>);
     }
-
-    if (!layoutsData.hasOwnProperty(currFamilyKey)) {
-        return (<div>An error occurred. Layout {currFamilyKey} not found.</div>);
-    }
-
-    const layoutsToDisplay = layoutsData[currFamilyKey];
 
     return (
         <div className="layouts-area">
             <h4 style={{ textTransform: "capitalize" }}>
-                {currFamilyKey} Layouts
+                {layoutCtx.layoutFamilyKey} Layouts
             </h4>
 
             <div className="layouts-grid">
-                {Object.keys(layoutsToDisplay).map((lKey) => (
+                {Object.keys(layoutCtx.layoutFamily).map((lKey) => (
                     <button
                         key={lKey}
                         className={btnStyle}

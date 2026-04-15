@@ -1,10 +1,10 @@
 // File: useContentMeasurements.js
 
 /**
- * @param {import("../types.js").Dimensions} canvasDims
- * @param {Array<import("../types.js").ImageSlot>} slots
+ * @param {import("../types/canvasTypes.js").Dimensions} canvasDims
+ * @param {import("../types/slotTypes.js").ImageSlot[]} slots
  * @param {number} spacing
- * @returns {Array<import("../types.js").ImageSlot>}
+ * @returns {import("../types/slotTypes.js").ImageSlot[]}
  */
 
 export function useContentMeasurements(canvasDims, slots, spacing) {
