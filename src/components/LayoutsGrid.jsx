@@ -11,7 +11,7 @@
  */
 
 export default function LayoutsGrid({ layoutsData, layoutCtx, btnStyle }) {
-    if (!layoutsData || !layoutCtx.layoutFamily) {
+    if (!layoutsData || !layoutCtx.layoutFamilyData) {
         return (<div></div>);
     }
 
@@ -22,7 +22,7 @@ export default function LayoutsGrid({ layoutsData, layoutCtx, btnStyle }) {
             </h4>
 
             <div className="layouts-grid">
-                {Object.keys(layoutCtx.layoutFamily).map((lKey) => (
+                {Object.keys(layoutCtx.layoutFamilyData).map((lKey) => (
                     <button
                         key={lKey}
                         className={btnStyle}

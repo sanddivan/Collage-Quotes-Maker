@@ -16,7 +16,7 @@
 /**
  * @typedef {Object} ImageSlot
  * @property {string} id
- * @property {Shape} shape
+ * @property {Shape | null} shape
  * @property {string | null} imageUrl
  */
 

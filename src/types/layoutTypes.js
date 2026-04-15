@@ -3,17 +3,19 @@
 /** @typedef {import("react").Dispatch} Dispatch */
 /** @typedef {import("react").SetStateAction} SetStateAction */
 
-/**
- * @typedef {Object} LayoutFamily
- * @property {string} name
- * @property {Record<string, Layout>} layouts
- */
+/** @typedef {import("./slotTypes.js").ImageSlot} T_ImageSlot */
 
 /**
  * @typedef {Object} Layout
  * @property {string} name
- * @property {string} family
- * @property {import("./slotTypes.js").ImageSlot[]} slots
+ * @property {string} familyName
+ * @property {T_ImageSlot[]} slots
+ */
+
+/**
+ * @typedef {Object} LayoutFamily
+ * @property {string} name
+ * @property {Object.<string, Layout>} layouts
  */
 
 /**
@@ -22,8 +24,8 @@
  * @property {Dispatch<SetStateAction<string | null>>} setLayoutFamilyKeyAction
  * @property {string | null} layoutKey
  * @property {Dispatch<SetStateAction<string | null>>} setLayoutKeyAction
- * @property {LayoutFamily | null} layoutFamily
- * @property {Layout | null} layout
+ * @property {LayoutFamily | null} layoutFamilyData
+ * @property {Layout | null} layoutData
  */
 
 export {};
