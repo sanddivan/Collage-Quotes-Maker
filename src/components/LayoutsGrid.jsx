@@ -1,9 +1,11 @@
 // File: LayoutsGrid.jsx
 
+/** @typedef {import("../types/layoutTypes.js").LayoutContext} T_LayoutContext */
+
 /**
  * @param {Object} props
- * @param {import("../data/base-layouts.json")} props.layoutsData
- * @param {import("../types/layoutTypes.js").LayoutContext} props.layoutCtx
+ * @param {Object} props.layoutsData // TODO: Make an actual type for the JSON this object represents.
+ * @param {T_LayoutContext} props.layoutCtx
  * @param {string} props.btnStyle
  * @returns {React.JSX.Element}
  */

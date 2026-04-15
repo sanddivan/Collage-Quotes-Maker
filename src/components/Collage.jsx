@@ -3,15 +3,19 @@
 import { useContentMeasurements } from "../hooks/useContentMeasurements.js";
 import styles from "./Collage.module.css";
 
+/** @typedef {import("../types/canvasTypes.js").Dimensions} T_Dimensions */
+/** @typedef {import("../types/layoutTypes.js").Layout} T_Layout */
+/** @typedef {import("../types/slotTypes.js").ImageSlot} T_ImageSlot */
+
 // BIG TODO: We're going to need to classify the different types of shards/slots
 //           somehow because we also need their centers for the placeholders.
 //           And maybe for implementing spacing as well.
 
 /**
  * @param {Object} props
- * @param {import("../types/canvasTypes.js").Dimensions} props.canvasDims
+ * @param {T_Dimensions} props.canvasDims
  * @param {string} props.canvasStyle
- * @param {import("../types/layoutTypes.js").Layout} props.layoutData
+ * @param {T_Layout} props.layoutData
  * @returns {React.JSX.Element}
  */
 
@@ -52,7 +56,7 @@ export default function Collage({ canvasDims, canvasStyle, layoutData }) {
 
 /**
  * @param props
- * @param {import("../types/slotTypes.js").ImageSlot[]} props.slotsData
+ * @param {T_ImageSlot[]} props.slotsData
  * @returns {React.JSX.Element}
  */
 
@@ -76,7 +80,7 @@ function SvgDefs({ slotsData }) {
 
 /**
  * @param props
- * @param {import("../types/slotTypes.js").ImageSlot[]} props.slotsData
+ * @param {T_ImageSlot[]} props.slotsData
  * @returns {React.JSX.Element}
  */
 

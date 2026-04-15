@@ -4,8 +4,10 @@ import { useCallback, useState } from "react";
 import { DEFAULT_CANVAS_HEIGHT, DEFAULT_CANVAS_WIDTH } from "../constants.js";
 import { useLayoutContext } from "./useLayoutContext.js";
 
+/** @typedef {import("../types/canvasTypes.js").CanvasContext} T_CanvasContext */
+
 /**
- * @returns {import("../types/canvasTypes.js").CanvasContext}
+ * @returns {T_CanvasContext}
  */
 
 export function useCanvasContext() {

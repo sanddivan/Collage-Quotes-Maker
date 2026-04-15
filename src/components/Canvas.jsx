@@ -4,9 +4,11 @@ import styles from "./Canvas.module.css";
 import baseLayoutData from "../data/base-layouts.json";
 import Collage from "./Collage.jsx";
 
+/** @typedef {import("../types/canvasTypes.js").CanvasContext} T_CanvasContext */
+
 /**
  * @param {Object} props
- * @param {import("../types/canvasTypes.js").CanvasContext} props.canvasCtx
+ * @param {T_CanvasContext} props.canvasCtx
  * @returns {React.JSX.Element}
  */
 

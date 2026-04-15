@@ -3,8 +3,10 @@
 import { useState } from "react";
 import baseLayoutData from "../data/base-layouts.json";
 
+/** @typedef {import("../types/layoutTypes.js").LayoutContext} T_LayoutContext */
+
 /**
- * @returns {import("../types/layoutTypes.js").LayoutContext}
+ * @returns {T_LayoutContext}
  */
 
 export function useLayoutContext() {
