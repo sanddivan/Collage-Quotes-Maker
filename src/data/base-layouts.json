@@ -1,0 +1,26 @@
+{
+    "2x2": {
+        "slots": [
+            {
+                "x-range": "0.0-0.5",
+                "y-range": "0.0-0.5",
+                "shape": "rectangle"
+            },
+            {
+                "x-range": "0.5-1.0",
+                "y-range": "0.0-0.5",
+                "shape": "rectangle"
+            },
+            {
+                "x-range": "0.0-0.5",
+                "y-range": "0.5-1.0",
+                "shape": "rectangle"
+            },
+            {
+                "x-range": "0.5-1.0",
+                "y-range": "0.5-1.0",
+                "shape": "rectangle"
+            }
+        ]
+    }
+}

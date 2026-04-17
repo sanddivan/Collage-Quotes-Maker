@@ -1,0 +1,10 @@
+/* File: Canvas.module.css */
+
+.theCanvas {
+    width: 1280px;
+    height: 720px;
+
+    background: #cccccc;
+    overflow: hidden;
+    position: relative;
+}
