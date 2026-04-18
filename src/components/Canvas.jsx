@@ -5,7 +5,7 @@
 
 import styles from "./Canvas.module.css";
 import baseLayoutData from "../data/base-layouts.json";
-import shapes from "../data/shapes.json";
+import shapesData from "../data/shapes.json";
 
 /**
  * @returns {React.JSX.Element}
@@ -14,13 +14,18 @@ import shapes from "../data/shapes.json";
 export default function Canvas() {
     const layout = '2x2';
     const layoutDesc = baseLayoutData[layout];
-    const theSlots = layoutDesc['slots'];
+    const slotsData = layoutDesc['slots'];
+
+    const theSlots = slotsData.map((sData) => {
+        const sShape = sData['shape'];
+        const shapeData = shapesData[sShape];
+    });
 
     return (
         <div className={styles.theCanvas}>
             <h1>The Slots!</h1>
 
-            {theSlots.map((sData) => (
+            {slotsData.map((sData) => (
                 <ol>
                     {Object.keys(sData).map((key) => (
                         <li key={key}>{key} - {sData[key]}</li>

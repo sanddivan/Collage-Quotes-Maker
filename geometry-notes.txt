@@ -1,0 +1,269 @@
+The Formula!
+
+For any vertex (x, y):
+
+mapped_x = xmin + x * (xmax - xmin)
+mapped_y = ymin + y * (ymax - ymin)
+
+Pseudocode!
+
+function mapPoint(point, xRange, yRange) {
+    const [xmin, xmax] = xRange;
+    const [ymin, ymax] = yRange;
+
+    return {
+        x: xmin + point.x * (xmax - xmin),
+        y: ymin + point.y * (ymax - ymin)
+    };
+}
+
+const mappedVertices = shape.vertices.map(v =>
+    mapPoint(v, [xmin, xmax], [ymin, ymax])
+);
+
+const mappedCenter = mapPoint(shape.center, [xmin, xmax], [ymin, ymax]);
+
+Padding and Rotating!
+
+This needs a specific order of operations:
+
+1) Apply padding, i.e. shrink the slot.
+2) Map from normalized space to padded slot.
+3) Rotate around the slot's center.
+
+Padding!
+
+Given:
+
+xmin, xmax
+ymin, ymax
+padding = p   // assume uniform for now
+
+Compute padded bounds:
+
+width  = xmax - xmin
+height = ymax - ymin
+
+px = p * width
+py = p * height
+
+xmin' = xmin + px
+xmax' = xmax - px
+ymin' = ymin + py
+ymax' = ymax - py
+
+Now, the "sources of truth" of the ranges are the prime values, rather than
+the original ones.
+
+Mapping!
+
+This is the same as before, just using the calculated prime values:
+
+mapped_x = xmin' + x * (xmax' - xmin')
+mapped_y = ymin' + y * (ymax' - ymin')
+
+Rotation!
+
+Find the center of the slot:
+
+cx = (xmin' + xmax') / 2
+cy = (ymin' + ymax') / 2
+
+Rotate Point!
+
+For any mapped point (x, y):
+
+1) Translate to origin
+
+dx = x - cx
+dy = y - cy
+
+2) Rotate
+
+rx = dx * cos(θ) - dy * sin(θ)
+ry = dx * sin(θ) + dy * cos(θ)
+
+3) Translate back
+
+final_x = cx + rx
+final_y = cy + ry
+
+Full Pseudocode!
+
+function transformPoint(point, slot, padding, angle) {
+    // 1. Parse ranges
+    let [xmin, xmax] = slot.xRange;
+    let [ymin, ymax] = slot.yRange;
+
+    // 2. Apply padding
+    let width  = xmax - xmin;
+    let height = ymax - ymin;
+
+    let px = padding * width;
+    let py = padding * height;
+
+    let xminP = xmin + px;
+    let xmaxP = xmax - px;
+    let yminP = ymin + py;
+    let ymaxP = ymax - py;
+
+    // 3. Map point
+    let x = xminP + point.x * (xmaxP - xminP);
+    let y = yminP + point.y * (ymaxP - yminP);
+
+    // 4. Compute center
+    let cx = (xminP + xmaxP) / 2;
+    let cy = (yminP + ymaxP) / 2;
+
+    // 5. Rotate
+    let dx = x - cx;
+    let dy = y - cy;
+
+    let cosA = Math.cos(angle);
+    let sinA = Math.sin(angle);
+
+    let rx = dx * cosA - dy * sinA;
+    let ry = dx * sinA + dy * cosA;
+
+    return {
+        x: cx + rx,
+        y: cy + ry
+    };
+}
+
+Mental Model!
+
+normalized shape
+   ↓
+fit into padded box
+   ↓
+spin around center
+   ↓
+final world coordinates
+
+The Single Transformation Matrix!
+
+This methodology allows us to chain transformations easily, and avoid repeating
+all the math calculations over and over again. This methodology is also widely
+used by graphics systems, like OpenGL and Unity.
+
+A 2D point can be represented as:
+
+[x, y, 1]
+
+That extra 1 lets translation work inside matrix multiplication.
+
+The Building Blocks!
+
+Scale to Fit into Slot:
+
+[ sx   0   0 ]
+[  0  sy   0 ]
+[  0   0   1 ]
+
+Where:
+
+sx = xmax - xmin
+sy = ymax - ymin
+
+Translation to Move into Place:
+
+[ 1  0  tx ]
+[ 0  1  ty ]
+[ 0  0   1 ]
+
+Where:
+
+tx = xmin
+ty = ymin
+
+Rotation Around Origin:
+
+[ cosθ  -sinθ  0 ]
+[ sinθ   cosθ  0 ]
+[  0       0   1 ]
+
+For Slot Center:
+
+translate(-center) → rotate → translate(+center)
+
+But what is translate?
+
+1) Move the world so the slot center becomes (0,0).
+2) Perform rotation
+3) Move everything back to how it's supposed to be.
+
+translate(tx, ty):
+    x' = x + tx
+    y' = y + ty
+
+rotate(x, y, θ):
+    rx = x*cosθ - y*sinθ
+    ry = x*sinθ + y*cosθ
+
+Putting it all together:
+
+dx = x - cx
+dy = y - cy
+
+rx = dx*cosθ - dy*sinθ
+ry = dx*sinθ + dy*cosθ
+
+final_x = cx + rx
+final_y = cy + ry
+
+Tiny Example:
+
+Let point be (1, 0), center be (1, 1), and θ be 90°.
+
+x = 1
+y = 0
+cx = 1
+cy = 1
+
+dx = 1 - 1 = 0
+dy = 0 - 1 = -1
+
+rotate 90° → (1, 0)
+
+add center back:
+(1+1, 0+1) = (2, 1) ✅ correct
+
+Full Transformation:
+
+T(center) × R(θ) × T(-center) × T(slot_position) × S(scale)
+
+Pseudocode Structure!
+
+function buildMatrix(slot, padding, angle) {
+    // Compute padded bounds
+    let [xmin, xmax] = slot.xRange;
+    let [ymin, ymax] = slot.yRange;
+
+    let width  = xmax - xmin;
+    let height = ymax - ymin;
+
+    let px = padding * width;
+    let py = padding * height;
+
+    xmin += px;
+    xmax -= px;
+    ymin += py;
+    ymax -= py;
+
+    let sx = xmax - xmin;
+    let sy = ymax - ymin;
+
+    let cx = (xmin + xmax) / 2;
+    let cy = (ymin + ymax) / 2;
+
+    // Build matrices
+    let S  = scaleMatrix(sx, sy);
+    let T1 = translationMatrix(xmin, ymin);
+    let T2 = translationMatrix(-cx, -cy);
+    let R  = rotationMatrix(angle);
+    let T3 = translationMatrix(cx, cy);
+
+    // Combine (right to left!)
+    return multiply(T3, multiply(R, multiply(T2, multiply(T1, S))));
+}
