@@ -3,9 +3,10 @@
 // Have a component in charge of fetching this data rather than have said fetch
 // scattered all over the place.
 
+import { useLayoutSlots } from "../hooks/useLayoutSlots.js";
+
 import styles from "./Canvas.module.css";
 import baseLayoutData from "../data/base-layouts.json";
-import shapesData from "../data/shapes.json";
 
 /**
  * @returns {React.JSX.Element}
@@ -27,21 +28,33 @@ export default function Canvas() {
     // We'll also need an ImageSlot.module.css, where we'll implement the
     // slots' animations.
 
-    const theSlots = slotsData.map((sData) => {
-        const sShape = sData['shape'];
-        const shapeData = shapesData[sShape];
-    });
+    const theSlots = useLayoutSlots(slotsData, 0);
 
     return (
         <div className={styles.theCanvas}>
             <h1>The Slots!</h1>
 
-            {slotsData.map((sData) => (
-                <ol>
-                    {Object.keys(sData).map((key) => (
-                        <li key={key}>{key} - {sData[key]}</li>
-                    ))}
-                </ol>
+            {/*{slotsData.map((sData) => (*/}
+            {/*    <ol>*/}
+            {/*        {Object.keys(sData).map((key) => (*/}
+            {/*            <li key={key}>{key} - {sData[key]}</li>*/}
+            {/*        ))}*/}
+            {/*    </ol>*/}
+            {/*))}*/}
+
+            {theSlots.map((slot, index) => (
+                <div>
+                    <h2>Slot {index + 1}!</h2>
+                    <p><strong>Center:</strong> &#123; x: {slot.center.x}, y: {slot.center.y} &#125;</p>
+
+                    <h3>Vertices:</h3>
+
+                    <ul>
+                        {slot.vertices.map((vertex) => (
+                            <li>&#123; x: {vertex.x}, y: {vertex.y} &#125;</li>
+                        ))}
+                    </ul>
+                </div>
             ))}
 
             {/*<svg viewBox="0 0 1 1" preserveAspectRatio="none">*/}
