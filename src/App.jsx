@@ -1,6 +1,7 @@
 // File: App.jsx
 
 import Canvas from "./components/Canvas.jsx";
+import Sidebar from "./components/Sidebar.jsx";
 
 /**
  * Setup function!
@@ -11,6 +12,7 @@ import Canvas from "./components/Canvas.jsx";
 export default function App() {
     return (
         <div className="app">
+            <Sidebar />
             <Canvas />
         </div>
     )

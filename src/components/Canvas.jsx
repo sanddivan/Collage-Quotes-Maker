@@ -31,34 +31,36 @@ export default function Canvas() {
     const theSlots = useLayoutSlots(slotsData, 0);
 
     return (
-        <div className={styles.theCanvas}>
-            <h1>The Slots!</h1>
+        <div className={styles.workspace}>
+            <div className={styles.theCanvas}>
+                <h1>The Slots!</h1>
 
-            {/*{slotsData.map((sData) => (*/}
-            {/*    <ol>*/}
-            {/*        {Object.keys(sData).map((key) => (*/}
-            {/*            <li key={key}>{key} - {sData[key]}</li>*/}
-            {/*        ))}*/}
-            {/*    </ol>*/}
-            {/*))}*/}
+                {/*{slotsData.map((sData) => (*/}
+                {/*    <ol>*/}
+                {/*        {Object.keys(sData).map((key) => (*/}
+                {/*            <li key={key}>{key} - {sData[key]}</li>*/}
+                {/*        ))}*/}
+                {/*    </ol>*/}
+                {/*))}*/}
 
-            {theSlots.map((slot, index) => (
-                <div>
-                    <h2>Slot {index + 1}!</h2>
-                    <p><strong>Center:</strong> &#123; x: {slot.center.x}, y: {slot.center.y} &#125;</p>
+                {theSlots.map((slot, index) => (
+                    <div>
+                        <h2>Slot {index + 1}!</h2>
+                        <p><strong>Center:</strong> &#123; x: {slot.center.x}, y: {slot.center.y} &#125;</p>
 
-                    <h3>Vertices:</h3>
+                        <h3>Vertices:</h3>
 
-                    <ul>
-                        {slot.vertices.map((vertex) => (
-                            <li>&#123; x: {vertex.x}, y: {vertex.y} &#125;</li>
-                        ))}
-                    </ul>
-                </div>
-            ))}
+                        <ul>
+                            {slot.vertices.map((vertex) => (
+                                <li>&#123; x: {vertex.x}, y: {vertex.y} &#125;</li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
 
-            {/*<svg viewBox="0 0 1 1" preserveAspectRatio="none">*/}
-            {/*</svg>*/}
+                {/*<svg viewBox="0 0 1 1" preserveAspectRatio="none">*/}
+                {/*</svg>*/}
+            </div>
         </div>
     );
 }

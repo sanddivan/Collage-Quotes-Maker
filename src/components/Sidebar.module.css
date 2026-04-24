@@ -1,0 +1,11 @@
+/* File: Sidebar.module.css */
+
+.sidebar {
+    padding: 16px;
+    border-right: 1px solid #ccc;
+    background: #aaaaaa;
+}
+
+.field {
+    margin-bottom: 12px;
+}
