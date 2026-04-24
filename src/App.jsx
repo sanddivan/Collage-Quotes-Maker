@@ -1,5 +1,6 @@
 // File: App.jsx
 
+import { useCanvasContext } from "./hooks/useCanvasContext.js";
 import Canvas from "./components/Canvas.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 
@@ -10,10 +11,12 @@ import Sidebar from "./components/Sidebar.jsx";
  */
 
 export default function App() {
+    const ctx = useCanvasContext();
+
     return (
         <div className="app">
-            <Sidebar />
-            <Canvas />
+            <Sidebar canvasCtx={ctx} />
+            <Canvas canvasCtx={ctx} />
         </div>
     )
 }

@@ -8,31 +8,31 @@ import { useLayoutSlots } from "../hooks/useLayoutSlots.js";
 import styles from "./Canvas.module.css";
 import baseLayoutData from "../data/base-layouts.json";
 
+/** @typedef {import("../types.js").CanvasContext} T_CanvasContext */
+
 /**
+ * @param props
+ * @param {T_CanvasContext} props.canvasCtx
  * @returns {React.JSX.Element}
  */
 
-export default function Canvas() {
+export default function Canvas({ canvasCtx }) {
+    console.log(canvasCtx);
+
+    /** @type {React.CSSProperties} */
+    const dimsCSS = {
+        '--canvas-width':  `${canvasCtx.width}px`,
+        '--canvas-height': `${canvasCtx.height}px`
+    }
+
     const layout = '2x2';
     const layoutDesc = baseLayoutData[layout];
     const slotsData = layoutDesc['slots'];
-
-    // Create a hook to use here, where we map each slot's data to an actual
-    // set of points, by applying Maths to the shapes' data.
-    //
-    // This hook should receive the layout data, and return the array of slots.
-    //
-    // Later on, inside that hook, we will call another hook that applies the
-    // inset polygon calculations for when there is spacing between slots.
-    //
-    // We'll also need an ImageSlot.module.css, where we'll implement the
-    // slots' animations.
-
     const theSlots = useLayoutSlots(slotsData, 0);
 
     return (
         <div className={styles.workspace}>
-            <div className={styles.theCanvas}>
+            <div className={styles.theCanvas} style={dimsCSS}>
                 <h1>The Slots!</h1>
 
                 {/*{slotsData.map((sData) => (*/}
