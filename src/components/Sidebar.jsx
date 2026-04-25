@@ -2,7 +2,7 @@
 
 import styles from "./Sidebar.module.css";
 
-/** @typedef {import("../types.js").CanvasContext} T_CanvasContext */
+/** @typedef {import("../types/canvasTypes.js").CanvasContext} T_CanvasContext */
 
 /**
  * @param props

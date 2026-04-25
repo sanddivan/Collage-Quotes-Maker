@@ -1,4 +1,4 @@
-// File: types.js
+// File: canvasTypes.js
 
 /**
  * @callback DimensionUpdateCallback

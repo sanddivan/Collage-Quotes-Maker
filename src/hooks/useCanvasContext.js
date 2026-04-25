@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 
-/** @typedef {import("../types.js").CanvasContext} T_CanvasContext */
+/** @typedef {import("../types/canvasTypes.js").CanvasContext} T_CanvasContext */
 
 /**
  * @returns {T_CanvasContext}

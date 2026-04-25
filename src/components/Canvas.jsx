@@ -3,12 +3,10 @@
 // Have a component in charge of fetching this data rather than have said fetch
 // scattered all over the place.
 
-import { useLayoutSlots } from "../hooks/useLayoutSlots.js";
-
 import styles from "./Canvas.module.css";
 import baseLayoutData from "../data/base-layouts.json";
 
-/** @typedef {import("../types.js").CanvasContext} T_CanvasContext */
+/** @typedef {import("../types/canvasTypes.js").CanvasContext} T_CanvasContext */
 
 /**
  * @param props
@@ -17,8 +15,6 @@ import baseLayoutData from "../data/base-layouts.json";
  */
 
 export default function Canvas({ canvasCtx }) {
-    console.log(canvasCtx);
-
     /** @type {React.CSSProperties} */
     const dimsCSS = {
         '--canvas-width':  `${canvasCtx.width}px`,
@@ -28,12 +24,12 @@ export default function Canvas({ canvasCtx }) {
     const layout = '2x2';
     const layoutDesc = baseLayoutData[layout];
     const slotsData = layoutDesc['slots'];
-    const theSlots = useLayoutSlots(slotsData, 0);
+    // const theSlots = useLayoutSlots(slotsData, 0);
 
     return (
         <div className={styles.workspace}>
             <div className={styles.theCanvas} style={dimsCSS}>
-                <h1>The Slots!</h1>
+                {/*<h1>The Slots!</h1>*/}
 
                 {/*{slotsData.map((sData) => (*/}
                 {/*    <ol>*/}
@@ -43,20 +39,20 @@ export default function Canvas({ canvasCtx }) {
                 {/*    </ol>*/}
                 {/*))}*/}
 
-                {theSlots.map((slot, index) => (
-                    <div>
-                        <h2>Slot {index + 1}!</h2>
-                        <p><strong>Center:</strong> &#123; x: {slot.center.x}, y: {slot.center.y} &#125;</p>
+                {/*{theSlots.map((slot, index) => (*/}
+                {/*    <div>*/}
+                {/*        <h2>Slot {index + 1}!</h2>*/}
+                {/*        <p><strong>Center:</strong> &#123; x: {slot.center.x}, y: {slot.center.y} &#125;</p>*/}
 
-                        <h3>Vertices:</h3>
+                {/*        <h3>Vertices:</h3>*/}
 
-                        <ul>
-                            {slot.vertices.map((vertex) => (
-                                <li>&#123; x: {vertex.x}, y: {vertex.y} &#125;</li>
-                            ))}
-                        </ul>
-                    </div>
-                ))}
+                {/*        <ul>*/}
+                {/*            {slot.vertices.map((vertex) => (*/}
+                {/*                <li>&#123; x: {vertex.x}, y: {vertex.y} &#125;</li>*/}
+                {/*            ))}*/}
+                {/*        </ul>*/}
+                {/*    </div>*/}
+                {/*))}*/}
 
                 {/*<svg viewBox="0 0 1 1" preserveAspectRatio="none">*/}
                 {/*</svg>*/}
