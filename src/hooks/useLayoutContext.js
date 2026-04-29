@@ -28,10 +28,12 @@ export function useLayoutContext() {
 
 /**
  * @param {string} layout
- * @returns {T_LayoutSlot[]}
+ * @returns {T_LayoutSlot[] | null}
  */
 
 function generateSlotsFromJSON(layout) {
+    if (!layout) return null;
+
     if (!Object.hasOwn(baseLayoutData, layout)) {
         throw new Error(`Layout "${layout}" was not found.`);
     }

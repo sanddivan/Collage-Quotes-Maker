@@ -4,7 +4,6 @@
 // scattered all over the place.
 
 import styles from "./Canvas.module.css";
-import baseLayoutData from "../data/base-layouts.json";
 
 /** @typedef {import("../types/canvasTypes.js").CanvasContext} T_CanvasContext */
 /** @typedef {import("../types/layoutTypes.js").LayoutContext} T_LayoutContext */
@@ -23,10 +22,8 @@ export default function Canvas({ canvasCtx, layoutCtx }) {
         '--canvas-height': `${canvasCtx.height}px`
     }
 
-    const layout = '2x2';
-    const layoutDesc = baseLayoutData[layout];
-    const slotsData = layoutDesc['slots'];
-    // const theSlots = useLayoutSlots(slotsData, 0);
+    const layoutSlots = layoutCtx.slots;
+    console.log(layoutSlots);
 
     return (
         <div className={styles.workspace}>
