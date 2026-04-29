@@ -1,6 +1,8 @@
 // File: App.jsx
 
 import { useCanvasContext } from "./hooks/useCanvasContext.js";
+import { useLayoutContext } from "./hooks/useLayoutContext.js";
+
 import Canvas from "./components/Canvas.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 
@@ -11,12 +13,13 @@ import Sidebar from "./components/Sidebar.jsx";
  */
 
 export default function App() {
-    const ctx = useCanvasContext();
+    const canvasCtx = useCanvasContext();
+    const layoutCtx = useLayoutContext();
 
     return (
         <div className="app">
-            <Sidebar canvasCtx={ctx} />
-            <Canvas canvasCtx={ctx} />
+            <Sidebar canvasCtx={canvasCtx} layoutCtx={layoutCtx} />
+            <Canvas canvasCtx={canvasCtx} layoutCtx={layoutCtx} />
         </div>
     )
 }

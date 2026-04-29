@@ -1,4 +1,4 @@
-// File: useLayout.js
+// File: useLayoutContext.js
 
 import { useMemo, useState } from "react";
 
@@ -12,7 +12,7 @@ import baseShapeData from "../data/shapes.json";
  * @returns {T_LayoutContext}
  */
 
-export function useLayout() {
+export function useLayoutContext() {
     const [layout, setLayout] = useState(null);
 
     const slots = useMemo(() => (
@@ -21,6 +21,7 @@ export function useLayout() {
 
     return {
         name: layout,
+        setLayoutAction: setLayout,
         slots: slots
     }
 }

@@ -7,14 +7,16 @@ import styles from "./Canvas.module.css";
 import baseLayoutData from "../data/base-layouts.json";
 
 /** @typedef {import("../types/canvasTypes.js").CanvasContext} T_CanvasContext */
+/** @typedef {import("../types/layoutTypes.js").LayoutContext} T_LayoutContext */
 
 /**
  * @param props
  * @param {T_CanvasContext} props.canvasCtx
+ * @param {T_LayoutContext} props.layoutCtx
  * @returns {React.JSX.Element}
  */
 
-export default function Canvas({ canvasCtx }) {
+export default function Canvas({ canvasCtx, layoutCtx }) {
     /** @type {React.CSSProperties} */
     const dimsCSS = {
         '--canvas-width':  `${canvasCtx.width}px`,

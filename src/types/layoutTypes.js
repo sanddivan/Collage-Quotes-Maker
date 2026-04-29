@@ -1,5 +1,8 @@
 // File: layoutTypes.js
 
+/** @typedef {import("react").Dispatch} Dispatch */
+/** @typedef {import("react").SetStateAction} SetStateAction */
+
 /**
  * @typedef {Object} Coordinates
  * @property {number} x
@@ -16,6 +19,7 @@
 /**
  * @typedef {Object} LayoutContext
  * @property {string | null} name
+ * @property {Dispatch<SetStateAction<string | null>>} setLayoutAction
  * @property {LayoutSlot[] | null} slots
  */
 
