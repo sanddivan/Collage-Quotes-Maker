@@ -35,6 +35,9 @@ export default function Canvas({ canvasCtx, layoutCtx }) {
         );
     }
 
+    // FIXME: I think we have to convert the viewBox to 0 0 100 100, and then
+    //        use literal percentages for the slots. Don't forget the "%" sign!
+
     return (
         <div className={styles.workspace}>
             <div className={styles.theCanvas} style={dimsCSS}>
