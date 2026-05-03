@@ -18,7 +18,7 @@ import styles from "./Canvas.module.css";
 export default function Canvas({ canvasCtx, layoutCtx }) {
     /** @type {React.CSSProperties} */
     const dimsCSS = {
-        '--canvas-width':  `${canvasCtx.width}px`,
+        '--canvas-width': `${canvasCtx.width}px`,
         '--canvas-height': `${canvasCtx.height}px`
     }
 

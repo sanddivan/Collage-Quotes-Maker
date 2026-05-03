@@ -22,5 +22,55 @@
                 "shape": "rectangle"
             }
         ]
+    },
+
+    "3x3": {
+        "slots": [
+            {
+                "x-range": "0.0-0.33",
+                "y-range": "0.0-0.33",
+                "shape": "rectangle"
+            },
+            {
+                "x-range": "0.33-0.67",
+                "y-range": "0.0-0.33",
+                "shape": "rectangle"
+            },
+            {
+                "x-range": "0.67-1.0",
+                "y-range": "0.0-0.33",
+                "shape": "rectangle"
+            },
+            {
+                "x-range": "0.0-0.33",
+                "y-range": "0.33-0.67",
+                "shape": "rectangle"
+            },
+            {
+                "x-range": "0.33-0.67",
+                "y-range": "0.33-0.67",
+                "shape": "rectangle"
+            },
+            {
+                "x-range": "0.67-1.0",
+                "y-range": "0.33-0.67",
+                "shape": "rectangle"
+            },
+            {
+                "x-range": "0.0-0.33",
+                "y-range": "0.67-1,0",
+                "shape": "rectangle"
+            },
+            {
+                "x-range": "0.33-0.67",
+                "y-range": "0.67-1,0",
+                "shape": "rectangle"
+            },
+            {
+                "x-range": "0.67-1.0",
+                "y-range": "0.67-1,0",
+                "shape": "rectangle"
+            }
+        ]
     }
 }
