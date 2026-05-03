@@ -11,6 +11,7 @@
 
 /**
  * @typedef {Object} LayoutSlot
+ * @property {string} id
  * @property {Coordinates} center
  * @property {Coordinates[]} vertices
  * @property {string | null} imageUrl

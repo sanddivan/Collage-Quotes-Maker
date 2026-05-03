@@ -4,6 +4,7 @@
 // scattered all over the place.
 
 import styles from "./Canvas.module.css";
+import ImageSlot from "./ImageSlot.jsx";
 
 /** @typedef {import("../types/canvasTypes.js").CanvasContext} T_CanvasContext */
 /** @typedef {import("../types/layoutTypes.js").LayoutContext} T_LayoutContext */
@@ -25,9 +26,24 @@ export default function Canvas({ canvasCtx, layoutCtx }) {
     const layoutSlots = layoutCtx.slots;
     console.log(layoutSlots);
 
+    if (!layoutSlots) {
+        return (
+            <div className={styles.workspace}>
+                <div className={styles.theCanvas} style={dimsCSS}>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className={styles.workspace}>
             <div className={styles.theCanvas} style={dimsCSS}>
+                <svg viewBox="0 0 1 1" preserveAspectRatio="none">
+                    {layoutSlots.map((slot) => (
+                        <ImageSlot key={slot.id} slotData={slot} />
+                    ))}
+                </svg>
+
                 {/*<h1>The Slots!</h1>*/}
 
                 {/*{slotsData.map((sData) => (*/}
@@ -52,9 +68,6 @@ export default function Canvas({ canvasCtx, layoutCtx }) {
                 {/*        </ul>*/}
                 {/*    </div>*/}
                 {/*))}*/}
-
-                {/*<svg viewBox="0 0 1 1" preserveAspectRatio="none">*/}
-                {/*</svg>*/}
             </div>
         </div>
     );

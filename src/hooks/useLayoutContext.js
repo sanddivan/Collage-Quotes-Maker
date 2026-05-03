@@ -40,7 +40,7 @@ function generateSlotsFromJSON(layout) {
 
     const slotsRawData = baseLayoutData[layout].slots;
 
-    return slotsRawData.map((slot) => {
+    return slotsRawData.map((slot, index) => {
         const slotShape = baseShapeData[slot['shape']];
         const xRange = rangeStrToNumbers(slot['x-range']);
         const yRange = rangeStrToNumbers(slot['y-range']);
@@ -51,6 +51,7 @@ function generateSlotsFromJSON(layout) {
         });
 
         return {
+            id: String(index),
             center: mapPointToRange(slotShape.center.x, slotShape.center.y),
             vertices: slotShape.vertices.map((vertex) => (
                 mapPointToRange(vertex.x, vertex.y)
