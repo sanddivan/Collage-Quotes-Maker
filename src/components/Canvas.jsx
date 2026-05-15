@@ -41,15 +41,15 @@ export default function Canvas({ canvasCtx, layoutCtx }) {
     return (
         <div className={styles.workspace}>
             <div className={styles.theCanvas} style={dimsCSS}>
-                <svg viewBox="0 0 1 1" preserveAspectRatio="none">
-                    {layoutSlots.map((slot) => (
-                        <ImageSlot key={slot.id} slotData={slot} />
-                    ))}
-                </svg>
+                {/*<svg viewBox="0 0 1 1" preserveAspectRatio="none">*/}
+                {/*    {layoutSlots.map((slot) => (*/}
+                {/*        <ImageSlot key={slot.id} slotData={slot} />*/}
+                {/*    ))}*/}
+                {/*</svg>*/}
 
                 {/*<h1>The Slots!</h1>*/}
 
-                {/*{slotsData.map((sData) => (*/}
+                {/*{layoutSlots.map((sData) => (*/}
                 {/*    <ol>*/}
                 {/*        {Object.keys(sData).map((key) => (*/}
                 {/*            <li key={key}>{key} - {sData[key]}</li>*/}
@@ -57,7 +57,7 @@ export default function Canvas({ canvasCtx, layoutCtx }) {
                 {/*    </ol>*/}
                 {/*))}*/}
 
-                {/*{theSlots.map((slot, index) => (*/}
+                {/*{layoutSlots.map((slot, index) => (*/}
                 {/*    <div>*/}
                 {/*        <h2>Slot {index + 1}!</h2>*/}
                 {/*        <p><strong>Center:</strong> &#123; x: {slot.center.x}, y: {slot.center.y} &#125;</p>*/}
@@ -65,8 +65,8 @@ export default function Canvas({ canvasCtx, layoutCtx }) {
                 {/*        <h3>Vertices:</h3>*/}
 
                 {/*        <ul>*/}
-                {/*            {slot.vertices.map((vertex) => (*/}
-                {/*                <li>&#123; x: {vertex.x}, y: {vertex.y} &#125;</li>*/}
+                {/*            {slot.vertices.map((vertex, index) => (*/}
+                {/*                <li key={index}>&#123; x: {vertex.x}, y: {vertex.y} &#125;</li>*/}
                 {/*            ))}*/}
                 {/*        </ul>*/}
                 {/*    </div>*/}

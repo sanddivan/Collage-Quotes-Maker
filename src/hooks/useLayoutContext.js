@@ -46,8 +46,8 @@ function generateSlotsFromJSON(layout) {
         const yRange = rangeStrToNumbers(slot['y-range']);
 
         const mapPointToRange = (x, y) => ({
-            x: xRange.low + x * (xRange.high - xRange.low),
-            y: yRange.low + y * (yRange.high - yRange.low),
+                x: (xRange.low + x * (xRange.high - xRange.low)) / 100,
+                y: (yRange.low + y * (yRange.high - yRange.low)) / 100,
         });
 
         return {

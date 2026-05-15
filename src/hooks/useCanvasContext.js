@@ -10,7 +10,7 @@ import { useCallback, useState } from "react";
 
 export function useCanvasContext() {
     const [width, setWidth] = useState(1280);
-    const [height, setHeight] = useState(720);
+    const [height, setHeight] = useState(1080);
 
     const updateDimension = useCallback((dim, value) => {
         if (dim !== 'width' && dim !== 'height') {

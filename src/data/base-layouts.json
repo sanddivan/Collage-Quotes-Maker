@@ -2,23 +2,23 @@
     "2x2": {
         "slots": [
             {
-                "x-range": "0.0-0.5",
-                "y-range": "0.0-0.5",
+                "x-range": "0-50",
+                "y-range": "0-50",
                 "shape": "rectangle"
             },
             {
-                "x-range": "0.5-1.0",
-                "y-range": "0.0-0.5",
+                "x-range": "50-100",
+                "y-range": "0-50",
                 "shape": "rectangle"
             },
             {
-                "x-range": "0.0-0.5",
-                "y-range": "0.5-1.0",
+                "x-range": "0-50",
+                "y-range": "50-100",
                 "shape": "rectangle"
             },
             {
-                "x-range": "0.5-1.0",
-                "y-range": "0.5-1.0",
+                "x-range": "50-100",
+                "y-range": "50-100",
                 "shape": "rectangle"
             }
         ]
@@ -27,48 +27,48 @@
     "3x3": {
         "slots": [
             {
-                "x-range": "0.0-0.33",
-                "y-range": "0.0-0.33",
+                "x-range": "0-33",
+                "y-range": "0-33",
                 "shape": "rectangle"
             },
             {
-                "x-range": "0.33-0.67",
-                "y-range": "0.0-0.33",
+                "x-range": "33-67",
+                "y-range": "0-33",
                 "shape": "rectangle"
             },
             {
-                "x-range": "0.67-1.0",
-                "y-range": "0.0-0.33",
+                "x-range": "67-100",
+                "y-range": "0-33",
                 "shape": "rectangle"
             },
             {
-                "x-range": "0.0-0.33",
-                "y-range": "0.33-0.67",
+                "x-range": "0-33",
+                "y-range": "33-67",
                 "shape": "rectangle"
             },
             {
-                "x-range": "0.33-0.67",
-                "y-range": "0.33-0.67",
+                "x-range": "33-67",
+                "y-range": "33-67",
                 "shape": "rectangle"
             },
             {
-                "x-range": "0.67-1.0",
-                "y-range": "0.33-0.67",
+                "x-range": "67-100",
+                "y-range": "33-67",
                 "shape": "rectangle"
             },
             {
-                "x-range": "0.0-0.33",
-                "y-range": "0.67-1,0",
+                "x-range": "0-33",
+                "y-range": "67-100",
                 "shape": "rectangle"
             },
             {
-                "x-range": "0.33-0.67",
-                "y-range": "0.67-1,0",
+                "x-range": "33-67",
+                "y-range": "67-100",
                 "shape": "rectangle"
             },
             {
-                "x-range": "0.67-1.0",
-                "y-range": "0.67-1,0",
+                "x-range": "67-100",
+                "y-range": "67-100",
                 "shape": "rectangle"
             }
         ]
